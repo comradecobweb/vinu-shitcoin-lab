@@ -16,8 +16,10 @@ export default async function getTokenProperties(address)
 
     let result;
     try {
-        result = await client.query(
-            `SELECT pausable, burnable, mintable, ownable FROM properties p INNER JOIN tokens t ON t.properties = p.id WHERE t.address='${address}';`);
+        result = await client.query({
+            text: 'SELECT pausable, burnable, mintable, ownable FROM properties p INNER JOIN tokens t ON t.properties = p.id WHERE t.address=$1;',
+            values: [address],
+        });
     }catch (err)
     {
         client.release();

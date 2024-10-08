@@ -16,8 +16,11 @@ export async function getUserID(address)
 
     let result;
     try {
-        result = await client.query(
-            `SELECT id FROM accounts WHERE address='${address}';`);
+        result = await client.query({
+            text: 'SELECT id FROM accounts WHERE address=$1;',
+            values: [address],
+
+        });
     }catch (err)
     {
         console.log(err);
@@ -58,7 +61,10 @@ async function addUser(address)
     }
 
     try {
-        await client.query(`INSERT INTO accounts(address) VALUES ('${address}');`);
+        await client.query({
+            text: 'INSERT INTO accounts(address) VALUES ($1);',
+            values: [address]
+        });
     }catch (err)
     {
         console.log(err);
@@ -84,7 +90,10 @@ async function addProperties(properties)
     }
 
     try {
-        await client.query(`INSERT INTO properties(pausable, burnable, mintable, ownable) VALUES(${properties.pausable}, ${properties.burnable}, ${properties.mintable}, ${properties.ownable});`);
+        await client.query({
+            text: 'INSERT INTO properties(pausable, burnable, mintable, ownable) VALUES($1, $2, $3, $4);',
+            values: [properties.pausable, properties.burnable, properties.mintable, properties.ownable],
+        });
     }catch (err)
     {
         console.log(err);
@@ -111,9 +120,10 @@ async function getPropertiesID(properties)
 
     let result;
     try {
-        result = await client.query(
-            `SELECT id FROM properties WHERE pausable=${properties.pausable} AND burnable=${properties.burnable} AND mintable=${properties.mintable} AND ownable=${properties.ownable};`
-        );
+        result = await client.query({
+            text: 'SELECT id FROM properties WHERE pausable=$1 AND burnable=$2 AND mintable=$3 AND ownable=$4;',
+            values: [properties.pausable, properties.burnable, properties.mintable, properties.ownable]
+        });
     }catch (err)
     {
         console.log(err);
@@ -163,7 +173,10 @@ export default async function addToken(user, token, properties)
     }
 
     try {
-        await client.query(`INSERT INTO tokens(address, deployer, properties) VALUES ('${token}', ${user_id}, ${properties_id});`);
+        await client.query({
+            text: 'INSERT INTO tokens(address, deployer, properties) VALUES ($1, $2, $3);',
+            values: [token, user_id, properties_id]
+        });
     }catch (err)
     {
         console.log(err);

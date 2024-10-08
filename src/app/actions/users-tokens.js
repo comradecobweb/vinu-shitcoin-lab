@@ -15,8 +15,10 @@ export default async function getUsersTokens(address)
 
     let result;
     try {
-        result = await client.query(
-            `SELECT t.address FROM tokens t INNER JOIN accounts u ON t.deployer = u.id WHERE u.address = '${address}';`);
+        result = await client.query({
+            text: 'SELECT t.address FROM tokens t INNER JOIN accounts u ON t.deployer = u.id WHERE u.address =$1;',
+            values: [address]
+        });
     }catch (err)
     {
         client.release();

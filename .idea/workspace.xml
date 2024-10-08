@@ -1,4 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PropertiesComponent">{}</component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="578cc047-ca54-4cf8-836a-ed02a13deb45" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/actions/add-token.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/actions/add-token.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/actions/check-ownership.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/actions/check-ownership.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/actions/token-properties.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/actions/token-properties.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/actions/users-tokens.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/actions/users-tokens.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/context/web3modal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/context/web3modal.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;comradecobweb&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/comradecobweb/vinu-shitcoin-lab.git&quot;,
+    &quot;accountId&quot;: &quot;a4a06ae4-34a1-444c-821d-2a704d97bdc5&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2mFUj2Mj5LO5ugRMffuge6Tasbc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "javascript.nodejs.core.library.configured.version": "20.17.0",
+    "javascript.nodejs.core.library.typings.version": "20.16.11",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.standard": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.standard": "",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.dev.executor": "Run",
+    "settings.editor.selected.configurable": "settings.javascript.linters.eslint",
+    "ts.external.directory.path": "C:\\Users\\Admin\\AppData\\Local\\Programs\\WebStorm\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="dev" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-WS-242.23339.15" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="578cc047-ca54-4cf8-836a-ed02a13deb45" name="Changes" comment="" />
+      <created>1726671952141</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1726671952141</updated>
+      <workItem from="1726671954377" duration="191000" />
+      <workItem from="1726678739031" duration="28000" />
+      <workItem from="1726766118941" duration="4463000" />
+      <workItem from="1726854085914" duration="4341000" />
+      <workItem from="1726923055896" duration="4891000" />
+      <workItem from="1727530409479" duration="4193000" />
+      <workItem from="1727641525244" duration="14000" />
+      <workItem from="1727897890230" duration="93000" />
+      <workItem from="1728054302731" duration="1480000" />
+      <workItem from="1728139782468" duration="529000" />
+      <workItem from="1728228049865" duration="3121000" />
+      <workItem from="1728401985869" duration="3311000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
 </project>

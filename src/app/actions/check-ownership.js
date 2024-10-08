@@ -46,7 +46,10 @@ async function getOwnerFromDB(address)
 
     let result;
     try {
-        result = await client.query(`SELECT a.address from tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address = '${address}';`);
+        result = await client.query({
+            text: 'SELECT a.address from tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address = $1;',
+            values: [address]
+        });
     }catch (err)
     {
         console.log(err);
@@ -83,7 +86,10 @@ export async function updateOwner(new_owner, token)
     }
 
     try {
-        await client.query(`UPDATE tokens SET deployer = ${user_id} WHERE address='${token}';`);
+        await client.query({
+            text: 'UPDATE tokens SET deployer = $1 WHERE address=$2;',
+            values: [user_id, token]
+        });
     }catch (err)
     {
         console.log(err);
@@ -111,7 +117,10 @@ async function checkDB(user, token)
     let result;
     try {
         result = await
-            client.query(`SELECT t.id FROM tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address='${token}' AND a.address='${user}';`);
+            client.query({
+                text: 'SELECT t.id FROM tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address=$1 AND a.address=$2;',
+                values: [token, user]
+            });
     }catch (err)
     {
         console.log(err);
@@ -142,7 +151,11 @@ export async function AppearsInDB(token)
     let result;
     try {
         result = await
-            client.query(`SELECT * FROM tokens WHERE address='${token}';`);
+            client.query({
+                text: 'SELECT * FROM tokens WHERE address=$1;',
+                values: [token]
+            });
+
     }catch (err)
     {
         console.log(err);

@@ -40,7 +40,7 @@ const ethersConfig = defaultConfig({
 
 createWeb3Modal({
     ethersConfig,
-    chains: [testnet],
+    chains: [mainnet],
     projectId,
     enableAnalytics: true
 })

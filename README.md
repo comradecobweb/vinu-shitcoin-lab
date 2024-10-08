@@ -6,7 +6,7 @@ and ease, because you don`t need to know how to code to make your token. The web
 ## License & contributing
 
 
-This program is distributed under Apache License 2.0, [see license file](LICENSE.md).
+This program is distributed under Apache 2.0 License, [see license file](LICENSE.md).
 All forms of contributing are welcome.
 
 
@@ -27,7 +27,7 @@ DB_PORT=
 DB_NAME=
 ```
 
-Remember to provide your data there.
+Remember to provide your data there!
 
 Then run:
 

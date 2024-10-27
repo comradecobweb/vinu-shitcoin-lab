@@ -1,4 +1,5 @@
-import { Pool } from "pg";
+import {Pool} from "pg";
+
 let db;
 
 if (!db) {
@@ -12,4 +13,4 @@ if (!db) {
 }
 
 
-export default db ;
+export default db;

@@ -2,14 +2,12 @@
 
 import db from "@/lib/db";
 
-export default async function getTokenProperties(address)
-{
+export default async function getTokenProperties(address) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         return null;
     }
 
@@ -20,8 +18,7 @@ export default async function getTokenProperties(address)
             text: 'SELECT pausable, burnable, mintable, ownable FROM properties p INNER JOIN tokens t ON t.properties = p.id WHERE t.address=$1;',
             values: [address],
         });
-    }catch (err)
-    {
+    } catch (err) {
         client.release();
         return null;
     }
@@ -29,11 +26,10 @@ export default async function getTokenProperties(address)
     client.release();
 
 
-
-   return{
-       pausable: result.rows[0].pausable,
-       burnable: result.rows[0].burnable,
-       mintable: result.rows[0].mintable,
-       ownable: result.rows[0].ownable,
-   };
+    return {
+        pausable: result.rows[0].pausable,
+        burnable: result.rows[0].burnable,
+        mintable: result.rows[0].mintable,
+        ownable: result.rows[0].ownable,
+    };
 }

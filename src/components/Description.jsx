@@ -2,8 +2,7 @@
 import {useEffect, useState} from "react";
 import countTokens from "@/app/actions/count-tokens";
 
-export default function Description()
-{
+export default function Description() {
     const [count, setCount] = useState(0);
 
     useEffect(() => {

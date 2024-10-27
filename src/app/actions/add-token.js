@@ -1,14 +1,12 @@
 'use server';
 import db from '@/lib/db';
 
-export async function getUserID(address)
-{
+export async function getUserID(address) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return null;
     }
@@ -21,8 +19,7 @@ export async function getUserID(address)
             values: [address],
 
         });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return null;
@@ -31,31 +28,24 @@ export async function getUserID(address)
     client.release();
 
 
-    if(result.rows.length===0)
-    {
-        if(await addUser(address))
-        {
+    if (result.rows.length === 0) {
+        if (await addUser(address)) {
             return await getUserID(address);
-        }else
-        {
+        } else {
             return null;
         }
-    }else
-    {
+    } else {
         return result.rows[0].id;
     }
 }
 
 
-
-async function addUser(address)
-{
+async function addUser(address) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return false;
     }
@@ -65,8 +55,7 @@ async function addUser(address)
             text: 'INSERT INTO accounts(address) VALUES ($1);',
             values: [address]
         });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return false;
@@ -77,14 +66,12 @@ async function addUser(address)
 }
 
 
-async function addProperties(properties)
-{
+async function addProperties(properties) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return false;
     }
@@ -94,8 +81,7 @@ async function addProperties(properties)
             text: 'INSERT INTO properties(pausable, burnable, mintable, ownable) VALUES($1, $2, $3, $4);',
             values: [properties.pausable, properties.burnable, properties.mintable, properties.ownable],
         });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return false;
@@ -105,14 +91,12 @@ async function addProperties(properties)
     return true;
 }
 
-async function getPropertiesID(properties)
-{
+async function getPropertiesID(properties) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return null;
     }
@@ -124,8 +108,7 @@ async function getPropertiesID(properties)
             text: 'SELECT id FROM properties WHERE pausable=$1 AND burnable=$2 AND mintable=$3 AND ownable=$4;',
             values: [properties.pausable, properties.burnable, properties.mintable, properties.ownable]
         });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return null;
@@ -134,31 +117,25 @@ async function getPropertiesID(properties)
     client.release();
 
 
-    if(result.rows.length===0)
-    {
-        if(await addProperties(properties))
-        {
+    if (result.rows.length === 0) {
+        if (await addProperties(properties)) {
             return await getPropertiesID(properties);
-        }else
-        {
+        } else {
             return null;
         }
-    }else
-    {
+    } else {
         return result.rows[0].id;
     }
 }
 
 
-export default async function addToken(user, token, properties)
-{
+export default async function addToken(user, token, properties) {
 
     const user_id = await getUserID(user);
     const properties_id = await getPropertiesID(properties);
 
 
-    if (user_id===null || properties_id===null)
-    {
+    if (user_id === null || properties_id === null) {
         return false;
     }
 
@@ -166,8 +143,7 @@ export default async function addToken(user, token, properties)
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return false;
     }
@@ -177,8 +153,7 @@ export default async function addToken(user, token, properties)
             text: 'INSERT INTO tokens(address, deployer, properties) VALUES ($1, $2, $3);',
             values: [token, user_id, properties_id]
         });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return false;

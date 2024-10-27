@@ -17,18 +17,17 @@ import {tokenContext} from "@/app/manage/[address]/page";
 import {updateOwner} from "@/app/actions/check-ownership";
 import {pausedContext} from "@/components/ManageGrid";
 
-export default function Renounce()
-{
+export default function Renounce() {
 
     const token = useContext(tokenContext);
     const [dialogVisible, setDialogVisible] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const { walletProvider } = useWeb3ModalProvider();
+    const {walletProvider} = useWeb3ModalProvider();
     const [paused] = useContext(pausedContext);
     const router = useRouter();
 
 
-    return(
+    return (
         <div className={"border-2 p-3 rounded-2xl flex flex-col size-full justify-around items-center"}>
 
             <Label
@@ -95,7 +94,6 @@ export default function Renounce()
                                     title: "Token ownership transferred renounced!",
                                     description: "Now no one can manage the token.",
                                 });
-
 
 
                                 setButtonDisabled(false);

@@ -14,14 +14,13 @@ import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
 
-export default function Burn()
-{
+export default function Burn() {
 
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const { walletProvider } = useWeb3ModalProvider();
-    const { address } = useWeb3ModalAccount();
+    const {walletProvider} = useWeb3ModalProvider();
+    const {address} = useWeb3ModalAccount();
     const [paused] = useContext(pausedContext);
 
     const [decimals, setDecimals] = useState(18);
@@ -32,13 +31,11 @@ export default function Burn()
 
 
     const formSchema = z.object({
-        amount: z.number().int().min(1, {message:"Value must be at least 1 characters!"}).
-        refine(()=>{
+        amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
             return check(amount, decimals);
-        }, {message:"Wrong value!"}).refine(async ()=>
-        {
+        }, {message: "Wrong value!"}).refine(async () => {
             return await haveEnough(address, token, amount);
-        }, {message:"You don't have enough tokens!"}),
+        }, {message: "You don't have enough tokens!"}),
     });
 
 
@@ -52,10 +49,8 @@ export default function Burn()
         }
     );
 
-    async function onSubmit(values)
-    {
-        if (paused)
-        {
+    async function onSubmit(values) {
+        if (paused) {
             toast({
                 title: "Error!",
                 description: "You can't burn paused token!",
@@ -94,17 +89,14 @@ export default function Burn()
 
 
             setButtonDisabled(false);
-        }catch (e)
-        {
+        } catch (e) {
             console.log(e);
-            if (e.info.error.code===4001)
-            {
+            if (e.info.error.code === 4001) {
                 toast({
                     title: "Oh no!",
                     description: "You just rejected a transaction!",
                 });
-            }else
-            {
+            } else {
                 toast({
                     title: "Unexpected error!",
                     description: "Something went wrong, but we don't know what.",
@@ -114,7 +106,7 @@ export default function Burn()
         }
     }
 
-    return(
+    return (
         <Form {...form}>
             <div className={"border-2 p-3 rounded-2xl size-full"}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className={'size-full'}>

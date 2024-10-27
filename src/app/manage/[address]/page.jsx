@@ -10,11 +10,10 @@ import {useRouter} from "next/navigation";
 export const tokenContext = createContext(undefined, undefined);
 
 
-export default function Page({params})
-{
+export default function Page({params}) {
     const token = params.address;
 
-    const { address, isConnected } = useWeb3ModalAccount();
+    const {address, isConnected} = useWeb3ModalAccount();
 
     const [allowed, setAllowed] = useState(undefined);
 
@@ -23,19 +22,16 @@ export default function Page({params})
 
     useEffect(() => {
 
-        if (address!==null && address!==undefined && isConnected)
-        {
-            checkOwnership(address, token).then(raw_allowed=> setAllowed(raw_allowed));
+        if (address !== null && address !== undefined && isConnected) {
+            checkOwnership(address, token).then(raw_allowed => setAllowed(raw_allowed));
         }
     }, [address, isConnected, router, token]);
 
 
     useEffect(() => {
-        if (!allowed)
-        {
-            AppearsInDB(token).then(appears=>{
-                if (!appears)
-                {
+        if (!allowed) {
+            AppearsInDB(token).then(appears => {
+                if (!appears) {
                     router.push('/404');
                 }
             });
@@ -43,23 +39,17 @@ export default function Page({params})
     }, [token, address, allowed, router]);
 
 
-    if (!isConnected)
-    {
+    if (!isConnected) {
         return <NoWallet/>
-    }
-    else
-    {
-        if (allowed)
-        {
-            return(
+    } else {
+        if (allowed) {
+            return (
                 <tokenContext.Provider value={token}>
                     <ManageGrid/>
                 </tokenContext.Provider>
             );
-        }
-        else
-        {
-            return(
+        } else {
+            return (
                 <NotAllowed/>
             );
         }

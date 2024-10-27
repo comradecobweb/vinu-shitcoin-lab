@@ -23,21 +23,20 @@ import {tokenContext} from "@/app/manage/[address]/page";
 import {updateOwner} from "@/app/actions/check-ownership";
 import {pausedContext} from "@/components/ManageGrid";
 
-export default function Transfer()
-{
+export default function Transfer() {
     const router = useRouter();
     const token = useContext(tokenContext);
     const [dialogVisible, setDialogVisible] = useState(false);
     const [address, setAddress] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const { walletProvider } = useWeb3ModalProvider();
+    const {walletProvider} = useWeb3ModalProvider();
     const [paused] = useContext(pausedContext);
 
 
     const formSchema = z.object({
-        address: z.string().refine(()=>{
+        address: z.string().refine(() => {
             return ethers.isAddress(address);
-}),
+        }),
     });
 
 
@@ -51,10 +50,8 @@ export default function Transfer()
         }
     );
 
-    async function onSubmit(values)
-    {
-        if (paused)
-        {
+    async function onSubmit(values) {
+        if (paused) {
             toast({
                 title: "Error!",
                 description: "You can't transfer ownership of paused token!",
@@ -66,14 +63,14 @@ export default function Transfer()
         setDialogVisible(true);
     }
 
-    return(
+    return (
         <Form {...form}>
             <div className={"border-2 p-3 rounded-2xl size-full"}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className={'size-full'}>
                     <FormField
                         control={form.control}
                         name="address"
-                        render={({ field }) => (
+                        render={({field}) => (
                             <FormItem className={"size-full flex flex-col justify-around items-center"}>
                                 <FormLabel>Transfer ownership</FormLabel>
                                 <FormControl>
@@ -85,7 +82,7 @@ export default function Transfer()
                                 <FormDescription>
                                     Changes the owner of the token.
                                 </FormDescription>
-                                <FormMessage />
+                                <FormMessage/>
                                 <PausableButton loading={buttonDisabled}>
                                     Transfer ownership
                                 </PausableButton>
@@ -106,9 +103,8 @@ export default function Transfer()
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel >Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={async ()=>
-                        {
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={async () => {
                             try {
                                 setButtonDisabled(true);
 
@@ -142,17 +138,14 @@ export default function Transfer()
                                 setButtonDisabled(false);
 
                                 router.push('/manage');
-                            }catch (e)
-                            {
+                            } catch (e) {
                                 console.log(e);
-                                if (e.info.error.code===4001)
-                                {
+                                if (e.info.error.code === 4001) {
                                     toast({
                                         title: "Oh no!",
                                         description: "You just rejected a transaction!",
                                     });
-                                }else
-                                {
+                                } else {
                                     toast({
                                         title: "Unexpected error!",
                                         description: "Something went wrong, but we don't know what.",

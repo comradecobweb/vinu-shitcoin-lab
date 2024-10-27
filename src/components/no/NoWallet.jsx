@@ -2,8 +2,7 @@
 import ConnectButton from "@/components/buttons/ConnectButton";
 import Center from "@/components/Center";
 
-export default function NoWallet()
-{
+export default function NoWallet() {
     return (
         <Center>
             <p>

@@ -8,10 +8,8 @@ import {getUserID} from "@/app/actions/add-token";
 const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
 
 
-async function getOwnerFromChain(address)
-{
-    try
-    {
+async function getOwnerFromChain(address) {
+    try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);
 
 
@@ -23,22 +21,18 @@ async function getOwnerFromChain(address)
 
 
         return String(await contract.owner());
-    }
-    catch (e)
-    {
+    } catch (e) {
         return null;
     }
 }
 
 
-async function getOwnerFromDB(address)
-{
+async function getOwnerFromDB(address) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return null;
     }
@@ -50,8 +44,7 @@ async function getOwnerFromDB(address)
             text: 'SELECT a.address from tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address = $1;',
             values: [address]
         });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return null;
@@ -59,19 +52,15 @@ async function getOwnerFromDB(address)
 
     client.release();
 
-    if (result.rows.length!==1)
-    {
+    if (result.rows.length !== 1) {
         return null;
-    }
-    else
-    {
+    } else {
         return result.rows[0].address;
     }
 }
 
 
-export async function updateOwner(new_owner, token)
-{
+export async function updateOwner(new_owner, token) {
     const user_id = await getUserID(new_owner);
 
 
@@ -79,8 +68,7 @@ export async function updateOwner(new_owner, token)
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return false;
     }
@@ -90,8 +78,7 @@ export async function updateOwner(new_owner, token)
             text: 'UPDATE tokens SET deployer = $1 WHERE address=$2;',
             values: [user_id, token]
         });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return false;
@@ -101,14 +88,12 @@ export async function updateOwner(new_owner, token)
     return true;
 }
 
-async function checkDB(user, token)
-{
+async function checkDB(user, token) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return null;
     }
@@ -121,8 +106,7 @@ async function checkDB(user, token)
                 text: 'SELECT t.id FROM tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address=$1 AND a.address=$2;',
                 values: [token, user]
             });
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return null;
@@ -135,14 +119,12 @@ async function checkDB(user, token)
 }
 
 
-export async function AppearsInDB(token)
-{
+export async function AppearsInDB(token) {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return null;
     }
@@ -156,8 +138,7 @@ export async function AppearsInDB(token)
                 values: [token]
             });
 
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return null;
@@ -169,38 +150,28 @@ export async function AppearsInDB(token)
 }
 
 
-
-export default async function checkOwnership(user, token)
-{
+export default async function checkOwnership(user, token) {
     const properties = await getTokenProperties(token);
 
 
-    if (properties.ownable)
-    {
+    if (properties.ownable) {
         const chain = await getOwnerFromChain(token);
 
 
-        if(chain===null || chain===undefined)
-        {
+        if (chain === null || chain === undefined) {
             return await checkDB(user, token);
         }
 
 
-
         const db = await getOwnerFromDB(token);
 
-        if (chain!==db)
-        {
+        if (chain !== db) {
             await updateOwner(chain, token);
             return await checkOwnership(user, token);
-        }
-        else
-        {
+        } else {
             return user === chain;
         }
-    }
-    else
-    {
+    } else {
         return await checkDB(user, token);
     }
 }

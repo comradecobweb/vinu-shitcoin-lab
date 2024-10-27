@@ -4,12 +4,10 @@ import {getTokenDetails} from "@/lib/lib";
 import Link from "next/link";
 import DescribedField from "@/components/DescribedField";
 
-export default async function TokenLink({address})
-{
-    const  details = await getTokenDetails(address);
-    if (details!==null)
-    {
-        return(
+export default async function TokenLink({address}) {
+    const details = await getTokenDetails(address);
+    if (details !== null) {
+        return (
 
             <Link href={`/manage/${address}`} className={"h-min w-full min-w-full hover:overflow-auto shrink-0 " +
                 "flex flex-row rounded-2xl border-4 p-2 justify-around overflow-hidden"}>
@@ -28,10 +26,8 @@ export default async function TokenLink({address})
                 </DescribedField>
             </Link>
         );
-    }
-    else
-    {
-        return(
+    } else {
+        return (
             <p>
                 Error!
             </p>

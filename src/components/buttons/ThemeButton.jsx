@@ -3,17 +3,15 @@
 
 import {Button} from "@/components/ui/button";
 import {useTheme} from "next-themes";
-import { Moon, Sun } from "lucide-react"
+import {Moon, Sun} from "lucide-react"
 
 
-export default function ThemeButton({className})
-{
-    const { resolvedTheme, setTheme } = useTheme();
+export default function ThemeButton({className}) {
+    const {resolvedTheme, setTheme} = useTheme();
     let icon;
 
 
-    switch (resolvedTheme)
-    {
+    switch (resolvedTheme) {
 
         case 'light':
             icon = <Sun suppressHydrationWarning/>;
@@ -24,19 +22,16 @@ export default function ThemeButton({className})
     }
 
 
-    function change()
-    {
-        if (resolvedTheme==='light')
-        {
+    function change() {
+        if (resolvedTheme === 'light') {
             setTheme('dark');
         }
-        if (resolvedTheme==='dark')
-        {
+        if (resolvedTheme === 'dark') {
             setTheme('light');
         }
     }
 
-    return(
+    return (
         <Button onClick={change} className={className} suppressHydrationWarning>
             {icon}
         </Button>

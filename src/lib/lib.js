@@ -4,26 +4,22 @@ const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
 
 const uint256 = 115792089237316195423570985008687907853269984665640564039457584007913129639935;
 
- export function check(amount, decimals)
-{
+export function check(amount, decimals) {
     try {
-        return  (BigInt(amount) * BigInt(10) ** BigInt(decimals)) < BigInt(uint256);
-    }catch (err) {
+        return (BigInt(amount) * BigInt(10) ** BigInt(decimals)) < BigInt(uint256);
+    } catch (err) {
         return false;
     }
 }
 
 
-export function getBalance(amount, decimals)
-{
+export function getBalance(amount, decimals) {
     return BigInt(amount) / BigInt(10) ** BigInt(decimals);
 }
 
 
-export async function haveEnough(user , token, amount)
-{
-    try
-    {
+export async function haveEnough(user, token, amount) {
+    try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);
 
 
@@ -43,18 +39,14 @@ export async function haveEnough(user , token, amount)
 
 
         return BigInt(balance) >= BigInt(amount);
-    }
-    catch (e)
-    {
+    } catch (e) {
         console.log(e);
         return null;
     }
 }
 
-export async function isTokenPaused(token)
-{
-    try
-    {
+export async function isTokenPaused(token) {
+    try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);
 
 
@@ -66,20 +58,15 @@ export async function isTokenPaused(token)
         let contract = new ethers.Contract(token, abi, provider);
 
 
-
         return Boolean(await contract.paused());
-    }
-    catch (e)
-    {
+    } catch (e) {
         console.log(e);
         return false;
     }
 }
 
-export async function getTokenDecimals(address)
-{
-    try
-    {
+export async function getTokenDecimals(address) {
+    try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);
 
         const abi = [
@@ -89,20 +76,15 @@ export async function getTokenDecimals(address)
         let contract = new ethers.Contract(address, abi, provider);
 
         return Number(await contract.decimals());
-    }
-    catch (e)
-    {
+    } catch (e) {
         console.log(e);
         return null;
     }
 }
 
 
-
-export async function getTokenDetails(address)
-{
-    try
-    {
+export async function getTokenDetails(address) {
+    try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);
 
         const abi = [
@@ -124,9 +106,7 @@ export async function getTokenDetails(address)
             decimals: decimals,
             totalSupply: Number(await getBalance(await contract.totalSupply(), decimals))
         };
-    }
-    catch (e)
-    {
+    } catch (e) {
         console.log(e);
         return null;
     }

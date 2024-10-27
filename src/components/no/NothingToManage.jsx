@@ -1,8 +1,7 @@
 import Center from "@/components/Center";
 
-export default function NothingToManage()
-{
-    return(
+export default function NothingToManage() {
+    return (
         <Center>
             <p>
                 Nothing to do!!!

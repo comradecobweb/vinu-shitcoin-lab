@@ -1,14 +1,12 @@
 'use server';
 import db from "@/lib/db";
 
-export default async function countTokens()
-{
+export default async function countTokens() {
     let client;
 
     try {
         client = await db.connect();
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         return null;
     }
@@ -17,8 +15,7 @@ export default async function countTokens()
     let result;
     try {
         result = await client.query(`SELECT count(tokens.id) FROM tokens;`);
-    }catch (err)
-    {
+    } catch (err) {
         console.log(err);
         client.release();
         return 0;

@@ -13,8 +13,7 @@ import NothingToManage from "@/components/no/NothingToManage";
 
 export const pausedContext = createContext(undefined, undefined);
 
-export default function ManageGrid()
-{
+export default function ManageGrid() {
 
     const token = useContext(tokenContext);
     const [properties, setProperties] = useState({});
@@ -26,27 +25,22 @@ export default function ManageGrid()
     }, [token]);
 
 
-    useEffect( ()=>{
+    useEffect(() => {
         isTokenPaused(token).then(data => setPaused(data));
-    },[token]);
+    }, [token]);
 
 
     useEffect(() => {
-        if (properties.mintable===false && properties.burnable===false &&
-            properties.pausable===false && properties.ownable===false)
-        {
+        if (properties.mintable === false && properties.burnable === false &&
+            properties.pausable === false && properties.ownable === false) {
             setEmpty(true);
         }
     }, [properties]);
 
 
-
-    if (empty)
-    {
+    if (empty) {
         return <NothingToManage/>
-    }
-    else
-    {
+    } else {
         return (
             <div className={"w-full h-full grid" +
                 " grid-cols-1 gap-y-5 overflow-y-auto" +

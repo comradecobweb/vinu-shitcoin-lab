@@ -5,17 +5,14 @@ import {Suspense} from "react";
 import TokenGrid from "@/components/TokenGrid";
 import Loading from "@/app/loading";
 
-const Page = async () =>{
-    const { address, isConnected } = useWeb3ModalAccount();
+const Page = async () => {
+    const {address, isConnected} = useWeb3ModalAccount();
 
 
-    if (!isConnected)
-    {
+    if (!isConnected) {
         return <NoWallet/>
-    }
-    else
-    {
-        return(
+    } else {
+        return (
             <Suspense fallback={<Loading/>}>
                 <TokenGrid address={address}/>
             </Suspense>

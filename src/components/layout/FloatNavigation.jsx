@@ -4,9 +4,8 @@ import WalletButton from "@/components/buttons/WalletButton";
 import ThemeButton from "@/components/buttons/ThemeButton";
 import Link from "next/link";
 
-export default async function FloatNavigation({className})
-{
-    return(
+export default async function FloatNavigation({className}) {
+    return (
         <div className={clsx(className, 'w-full flex flex-row justify-center lg:justify-end items-center')}>
 
             <div

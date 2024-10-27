@@ -9,9 +9,8 @@ import {
 import WalletButton from "@/components/buttons/WalletButton";
 import ThemeButton from "@/components/buttons/ThemeButton";
 
-export default async function DesktopNavigation({className})
-{
-    return(
+export default async function DesktopNavigation({className}) {
+    return (
         <div className={clsx(className, "w-full flex flex-row justify-evenly sm:justify-end overflow-x-auto")}>
             <NavigationMenu className={"flex flex-row justify-evenly"}>
                 <NavigationMenuList>

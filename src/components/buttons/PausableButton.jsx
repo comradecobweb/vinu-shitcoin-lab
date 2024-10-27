@@ -5,32 +5,26 @@ import {pausedContext} from "@/components/ManageGrid";
 import {Loader2} from "lucide-react";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 
-export default function PausableButton({children, loading, className, onClick, type})
-{
+export default function PausableButton({children, loading, className, onClick, type}) {
     const [paused] = useContext(pausedContext);
 
-    if (!paused)
-    {
-        if (loading)
-        {
-            return(
+    if (!paused) {
+        if (loading) {
+            return (
                 <Button type={type} className={className} disabled>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
                     Please wait
                 </Button>
             )
-        }
-        else
-        {
-            return(
+        } else {
+            return (
                 <Button type={type} className={className} onClick={onClick}>
                     {children}
                 </Button>
             );
         }
-    }else
-    {
-        return(
+    } else {
+        return (
             <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger disabled>
@@ -43,6 +37,6 @@ export default function PausableButton({children, loading, className, onClick, t
                     </TooltipContent>
                 </Tooltip>
             </TooltipProvider>
-            );
+        );
     }
 }

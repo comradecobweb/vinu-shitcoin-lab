@@ -1,15 +1,25 @@
-'use client';
-import {useDisconnect, useWeb3ModalAccount} from '@web3modal/ethers/react'
-import ConnectButton from "@/components/buttons/ConnectButton";
+'use client'
+
+import {useAppKit} from '@reown/appkit/react'
+import {useAppKitAccount} from "@reown/appkit/react";
+import {useDisconnect} from '@reown/appkit/react'
 import {Button} from "@/components/ui/button";
 
 export default function WalletButton() {
-    const {isConnected} = useWeb3ModalAccount();
-    const {disconnect} = useDisconnect();
+    const {isConnected} = useAppKitAccount()
+    const {open} = useAppKit();
+    const {disconnect} = useDisconnect()
 
     if (isConnected) {
-        return (<Button onClick={() => disconnect()} suppressHydrationWarning>Disconnect</Button>);
+        return (
+            <Button onClick={disconnect}>
+                Disconnect
+            </Button>
+        )
     } else {
-        return (<ConnectButton suppressHydrationWarning/>);
+        return <Button onClick={open}>
+            Connect
+        </Button>
     }
+
 }

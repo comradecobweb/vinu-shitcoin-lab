@@ -4,8 +4,8 @@ import "./globals.css";
 import {clsx} from "clsx";
 import {Toaster} from "@/components/ui/toaster";
 import Header from "@/components/layout/Header";
-import {ThemeProvider} from "@/context/theme-provider";
-import ContextProvider from "@/context/ContextProvider";
+import {ThemeProvider} from "@/context/ThemeProvider";
+import WagmiContextProvider from "@/context/WagmiContextProvider";
 import {headers} from "next/headers";
 
 const inter = Inter({subsets: ["latin"]});
@@ -30,9 +30,9 @@ export default function RootLayout({children}) {
             <Header className={"mt-2 mb-2"}/>
             <div className={"self-stretch h-full flex justify-center overflow-y-auto mt-5 mb-5"}>
                 <div className={"w-full h-full sm:w-5/6 lg:w-4/6"} id={'core'}>
-                    <ContextProvider cookies={cookies}>
+                    <WagmiContextProvider cookies={cookies}>
                         {children}
-                    </ContextProvider>
+                    </WagmiContextProvider>
                 </div>
             </div>
             <Footer/>

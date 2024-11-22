@@ -30,7 +30,7 @@ const modal = createAppKit({
     }
 })
 
-function ContextProvider({children, cookies}) {
+function WagmiContextProvider({children, cookies}) {
     const initialState = cookieToInitialState(wagmiAdapter.wagmiConfig, cookies)
 
     return (
@@ -40,4 +40,4 @@ function ContextProvider({children, cookies}) {
     )
 }
 
-export default ContextProvider
+export default WagmiContextProvider

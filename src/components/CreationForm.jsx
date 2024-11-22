@@ -16,7 +16,7 @@ import {toast} from "@/components/ui/use-toast"
 import addToken from "@/actions/add-token";
 import SubmitButton from "@/components/buttons/SubmitButton";
 import {check} from "@/lib/lib";
-import {useEthersSigner} from "@/hooks/ethers-adapters";
+import {useEthersSigner} from "@/hooks/useEthers";
 import {ContractFactory} from "ethers";
 import generateContract from "@/actions/generate-contract";
 import {useAppKitAccount} from "@reown/appkit/react";

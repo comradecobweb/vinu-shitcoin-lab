@@ -4,8 +4,8 @@ import "./globals.css";
 import {clsx} from "clsx";
 import {Toaster} from "@/components/ui/toaster";
 import Header from "@/components/layout/Header";
-import {ThemeProvider} from "@/app/context/theme-provider";
-import ContextProvider from "@/app/context/ContextProvider";
+import {ThemeProvider} from "@/context/theme-provider";
+import ContextProvider from "@/context/ContextProvider";
 import {headers} from "next/headers";
 
 const inter = Inter({subsets: ["latin"]});

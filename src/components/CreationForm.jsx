@@ -13,12 +13,14 @@ import {
     AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {toast} from "@/components/ui/use-toast"
-import generateContract from "@/app/actions/generate-contract";
 import addToken from "@/app/actions/add-token";
 import SubmitButton from "@/components/buttons/SubmitButton";
 import {check} from "@/lib/lib";
+import {useEthersSigner} from "@/lib/ethers-adapters";
+import {ContractFactory} from "ethers";
+import generateContract from "@/app/actions/generate-contract";
 import {useAppKitAccount} from "@reown/appkit/react";
-import {useDeployContract} from 'wagmi'
+import {useAppKitNetwork} from "@reown/appkit/react";
 
 export default function CreationForm() {
 
@@ -28,12 +30,9 @@ export default function CreationForm() {
     const [tokenProperties, setTokenProperties] = useState({});
     const [disabled, setDisabled] = useState(false);
 
-
-    const {address, isConnected} = useAppKitAccount();
-    const {
-        deployContractAsync, isPending
-
-    } = useDeployContract();
+    const {address, isConnected} = useAppKitAccount()
+    const {chainId} = useAppKitNetwork()
+    const signer = useEthersSigner({chainId})
 
 
     const formSchema = z.object({
@@ -267,35 +266,54 @@ export default function CreationForm() {
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction onClick={async () => {
-                            setDisabled(true);
+                            try {
+                                setDisabled(true);
+                                const contract_source = await generateContract(tokenProperties);
 
-                            const contract_source = await generateContract(tokenProperties);
+
+                                const factoryERC20
+                                    = new ContractFactory(contract_source.abi, contract_source.bytecode, signer);
+
+                                const contractERC20 = await factoryERC20.deploy();
 
 
-                            await deployContractAsync({
-                                abi: contract_source.abi,
-                                bytecode: contract_source.bytecode,
-                            }, {
+                                let token_address = await contractERC20.getAddress();
 
-                                onSuccess: async (token_address) => {
-                                    console.log(token_address);
-                                    await addToken(address, token_address, tokenProperties);
-                                    toast({
-                                        title: "Contract deployed on the blockchain",
-                                        description: "Now Now you can use and manage your token!",
-                                    });
-                                },
-                                onError: () => {
-                                    toast({
-                                        title: "Error!",
-                                        description: "Try again later..."
-                                    });
 
+                                toast({
+                                    title: "Wait for contract deployment on the blockchain...",
+                                    description: "This shouldn't take long.",
+                                });
+
+
+                                await contractERC20.waitForDeployment();
+                                await addToken(address, token_address, tokenProperties);
+
+                                toast({
+                                    title: "Contract deployed on the blockchain",
+                                    description: "Now Now you can use and manage your token!",
+                                });
+                                setDisabled(false);
+
+                            } catch (e) {
+                                try {
+                                    console.log(e);
+                                    if (e.info.error.code === 4001) {
+                                        toast({
+                                            title: "Oh no!",
+                                            description: "You just rejected a transaction!",
+                                        });
+                                    } else {
+                                        toast({
+                                            title: "Unexpected error!",
+                                            description: "Something went wrong, but we don't know what.",
+                                        });
+                                    }
+                                    setDisabled(false);
+                                } catch (ee) {
+                                    setDisabled(false);
                                 }
-
-                            })
-
-                            setDisabled(false);
+                            }
                         }}>Deploy</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

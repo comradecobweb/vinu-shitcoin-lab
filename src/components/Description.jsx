@@ -1,6 +1,6 @@
 'use client';
 import {useEffect, useState} from "react";
-import countTokens from "@/app/actions/count-tokens";
+import countTokens from "@/actions/count-tokens";
 
 export default function Description() {
     const [count, setCount] = useState(0);

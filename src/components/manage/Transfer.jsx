@@ -20,7 +20,7 @@ import {
 import {useRouter} from "next/navigation";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
-import {updateOwner} from "@/app/actions/check-ownership";
+import {updateOwner} from "@/actions/check-ownership";
 import {pausedContext} from "@/components/ManageGrid";
 
 export default function Transfer() {

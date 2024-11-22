@@ -1,5 +1,5 @@
 'use server';
-import getUsersTokens from "@/app/actions/users-tokens";
+import getUsersTokens from "@/actions/users-tokens";
 import TokenLink from "@/components/TokenLink";
 import {Suspense} from "react";
 import Loading from "@/app/loading";

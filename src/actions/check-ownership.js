@@ -1,9 +1,9 @@
 'use server';
 
 import db from "@/lib/db";
-import getTokenProperties from "@/app/actions/token-properties";
+import getTokenProperties from "@/actions/token-properties";
 import {ethers} from "ethers";
-import {getUserID} from "@/app/actions/add-token";
+import {getUserID} from "@/actions/add-token";
 
 const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
 

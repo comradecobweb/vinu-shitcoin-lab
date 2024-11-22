@@ -4,7 +4,7 @@ import Burn from "@/components/manage/Burn";
 import Pause from "@/components/manage/Pause";
 import {createContext, useContext, useEffect, useState} from "react";
 import {tokenContext} from "@/app/manage/[address]/page";
-import getTokenProperties from "@/app/actions/token-properties";
+import getTokenProperties from "@/actions/token-properties";
 import {isTokenPaused} from "@/lib/lib";
 import Transfer from "@/components/manage/Transfer";
 import Renounce from "@/components/manage/Renounce";

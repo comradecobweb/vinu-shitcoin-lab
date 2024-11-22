@@ -3,7 +3,7 @@ import {useWeb3ModalAccount} from "@web3modal/ethers/react";
 import NoWallet from "@/components/no/NoWallet";
 import ManageGrid from "@/components/ManageGrid";
 import {createContext, useEffect, useState} from "react";
-import checkOwnership, {AppearsInDB} from "@/app/actions/check-ownership";
+import checkOwnership, {AppearsInDB} from "@/actions/check-ownership";
 import NotAllowed from "@/components/no/NotAllowed";
 import {useRouter} from "next/navigation";
 

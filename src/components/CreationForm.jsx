@@ -13,12 +13,12 @@ import {
     AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {toast} from "@/components/ui/use-toast"
-import addToken from "@/app/actions/add-token";
+import addToken from "@/actions/add-token";
 import SubmitButton from "@/components/buttons/SubmitButton";
 import {check} from "@/lib/lib";
-import {useEthersSigner} from "@/lib/ethers-adapters";
+import {useEthersSigner} from "@/hooks/ethers-adapters";
 import {ContractFactory} from "ethers";
-import generateContract from "@/app/actions/generate-contract";
+import generateContract from "@/actions/generate-contract";
 import {useAppKitAccount} from "@reown/appkit/react";
 import {useAppKitNetwork} from "@reown/appkit/react";
 

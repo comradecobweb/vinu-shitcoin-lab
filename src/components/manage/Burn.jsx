@@ -1,6 +1,5 @@
 'use client';
 import {useContext, useEffect, useState} from "react";
-import {useWeb3ModalAccount, useWeb3ModalProvider} from "@web3modal/ethers/react";
 import {getTokenDecimals} from "@/lib/lib";
 import {z} from "zod";
 import {check, haveEnough} from "@/lib/lib";
@@ -13,13 +12,14 @@ import {Input} from "@/components/ui/input";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
+import {useEthersSigner} from "@/hooks/useEthers";
 
 export default function Burn() {
 
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const {walletProvider} = useWeb3ModalProvider();
+    const signer = useEthersSigner()
     const {address} = useWeb3ModalAccount();
     const [paused] = useContext(pausedContext);
 
@@ -61,10 +61,6 @@ export default function Burn() {
 
         try {
             setButtonDisabled(true);
-
-
-            const provider = new BrowserProvider(walletProvider);
-            const signer = await provider.getSigner()
 
             const abi = ["function burn(uint256 value) external"];
 

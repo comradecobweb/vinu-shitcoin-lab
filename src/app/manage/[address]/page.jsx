@@ -1,11 +1,11 @@
 'use client';
-import {useWeb3ModalAccount} from "@web3modal/ethers/react";
 import NoWallet from "@/components/no/NoWallet";
 import ManageGrid from "@/components/ManageGrid";
 import {createContext, useEffect, useState} from "react";
 import checkOwnership, {AppearsInDB} from "@/actions/check-ownership";
 import NotAllowed from "@/components/no/NotAllowed";
 import {useRouter} from "next/navigation";
+import {useAppKitAccount} from "@reown/appkit/react";
 
 export const tokenContext = createContext(undefined, undefined);
 
@@ -13,7 +13,7 @@ export const tokenContext = createContext(undefined, undefined);
 export default function Page({params}) {
     const token = params.address;
 
-    const {address, isConnected} = useWeb3ModalAccount();
+    const {isConnected, address} = useAppKitAccount()
 
     const [allowed, setAllowed] = useState(undefined);
 

@@ -1,6 +1,5 @@
 'use client';
 import {useContext, useState} from "react";
-import {useWeb3ModalProvider} from "@web3modal/ethers/react";
 import {useRouter} from "next/navigation";
 import {BrowserProvider, ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
@@ -16,13 +15,14 @@ import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {updateOwner} from "@/actions/check-ownership";
 import {pausedContext} from "@/components/ManageGrid";
+import {useEthersSigner} from "@/hooks/useEthers";
 
 export default function Renounce() {
 
     const token = useContext(tokenContext);
     const [dialogVisible, setDialogVisible] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const {walletProvider} = useWeb3ModalProvider();
+    const signer = useEthersSigner()
     const [paused] = useContext(pausedContext);
     const router = useRouter();
 
@@ -68,10 +68,6 @@ export default function Renounce() {
                         <AlertDialogAction onClick={async () => {
                             try {
                                 setButtonDisabled(true);
-
-
-                                const provider = new BrowserProvider(walletProvider);
-                                const signer = await provider.getSigner()
 
                                 const abi = ["function renounceOwnership() external"];
 

@@ -2,17 +2,17 @@
 import {useContext, useEffect, useState} from "react";
 import {BrowserProvider, ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
-import {useWeb3ModalProvider} from "@web3modal/ethers/react";
 import {isTokenPaused} from "@/lib/lib";
 import LoadingButton from "@/components/buttons/LoadingButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
+import {useEthersSigner} from "@/hooks/useEthers";
 
 export default function PauseButton({className}) {
     const token = useContext(tokenContext);
     const [disabled, setDisabled] = useState(false);
     const [paused, setPaused] = useContext(pausedContext);
-    const {walletProvider} = useWeb3ModalProvider();
+    const signer = useEthersSigner();
 
     useEffect(() => {
         isTokenPaused(token).then(data => setPaused(data));
@@ -23,9 +23,6 @@ export default function PauseButton({className}) {
         setDisabled(true);
 
         try {
-            const provider = new BrowserProvider(walletProvider);
-            const signer = await provider.getSigner()
-
             const abi = [
                 "function pause() external",
                 "function unpause() external",

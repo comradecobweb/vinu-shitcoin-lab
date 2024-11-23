@@ -7,18 +7,18 @@ import {Input} from "@/components/ui/input";
 import {useContext, useEffect, useState} from "react";
 import {BrowserProvider, ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
-import {useWeb3ModalAccount, useWeb3ModalProvider} from "@web3modal/ethers/react";
 import {getTokenDecimals} from "@/lib/lib";
 import {check} from "@/lib/lib";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
+import {useEthersSigner} from "@/hooks/useEthers";
 
 export default function Mint() {
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const {walletProvider} = useWeb3ModalProvider();
+    const signer = useEthersSigner()
     const {address} = useWeb3ModalAccount();
 
     const [decimals, setDecimals] = useState(18);
@@ -59,10 +59,6 @@ export default function Mint() {
 
         try {
             setButtonDisabled(true);
-
-
-            const provider = new BrowserProvider(walletProvider);
-            const signer = await provider.getSigner()
 
             const abi = ["function mint(address to, uint256 amount) external"];
 

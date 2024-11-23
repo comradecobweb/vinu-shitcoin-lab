@@ -1,6 +1,5 @@
 'use client';
 import {useContext, useState} from "react";
-import {useWeb3ModalProvider} from "@web3modal/ethers/react";
 import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -22,6 +21,7 @@ import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {updateOwner} from "@/actions/check-ownership";
 import {pausedContext} from "@/components/ManageGrid";
+import {useEthersSigner} from "@/hooks/useEthers";
 
 export default function Transfer() {
     const router = useRouter();
@@ -29,7 +29,7 @@ export default function Transfer() {
     const [dialogVisible, setDialogVisible] = useState(false);
     const [address, setAddress] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const {walletProvider} = useWeb3ModalProvider();
+    const signer = useEthersSigner()
     const [paused] = useContext(pausedContext);
 
 
@@ -107,10 +107,6 @@ export default function Transfer() {
                         <AlertDialogAction onClick={async () => {
                             try {
                                 setButtonDisabled(true);
-
-
-                                const provider = new BrowserProvider(walletProvider);
-                                const signer = await provider.getSigner()
 
                                 const abi = ["function transferOwnership(address newOwner) external"];
 

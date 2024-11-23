@@ -1,6 +1,7 @@
 import {BrowserProvider, FallbackProvider, JsonRpcProvider, JsonRpcSigner} from 'ethers'
 import {useMemo} from 'react'
 import {useClient, useConnectorClient} from 'wagmi'
+import {useAppKitNetwork} from "@reown/appkit/react";
 
 function clientToProvider(client) {
     const {chain, transport} = client
@@ -19,7 +20,8 @@ function clientToProvider(client) {
     return new JsonRpcProvider(transport.url, network)
 }
 
-export function useEthersProvider({chainId}) {
+export function useEthersProvider() {
+    const {chainId} = useAppKitNetwork()
     const client = useClient({chainId})
     return useMemo(() => (client ? clientToProvider(client) : undefined), [client])
 }
@@ -35,7 +37,8 @@ function clientToSigner(client) {
     return new JsonRpcSigner(provider, account.address)
 }
 
-export function useEthersSigner({chainId}) {
+export function useEthersSigner() {
+    const {chainId} = useAppKitNetwork()
     const {data: client} = useConnectorClient({chainId})
     return useMemo(() => (client ? clientToSigner(client) : undefined), [client])
 }

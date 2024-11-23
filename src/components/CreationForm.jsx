@@ -20,7 +20,6 @@ import {useEthersSigner} from "@/hooks/useEthers";
 import {ContractFactory} from "ethers";
 import generateContract from "@/actions/generate-contract";
 import {useAppKitAccount} from "@reown/appkit/react";
-import {useAppKitNetwork} from "@reown/appkit/react";
 
 export default function CreationForm() {
 
@@ -31,8 +30,7 @@ export default function CreationForm() {
     const [disabled, setDisabled] = useState(false);
 
     const {address, isConnected} = useAppKitAccount()
-    const {chainId} = useAppKitNetwork()
-    const signer = useEthersSigner({chainId})
+    const signer = useEthersSigner()
 
 
     const formSchema = z.object({

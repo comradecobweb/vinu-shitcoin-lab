@@ -1,36 +1,59 @@
-'use server';
-
-import {getTokenDetails} from "@/lib/lib";
+'use client';
 import Link from "next/link";
 import DescribedField from "@/components/DescribedField";
+import {useEffect, useState} from "react";
+import {ethers} from "ethers";
+import {useEthersProvider} from "@/hooks/useEthers";
 
-export default async function TokenLink({address}) {
-    const details = await getTokenDetails(address);
-    if (details !== null) {
-        return (
+export default function TokenLink({address}) {
 
-            <Link href={`/manage/${address}`} className={"h-min w-full min-w-full hover:overflow-auto shrink-0 " +
-                "flex flex-row rounded-2xl border-4 p-2 justify-around overflow-hidden"}>
+    const provider = useEthersProvider();
 
-                <DescribedField description={"symbol"}>
-                    {details.symbol}
-                </DescribedField>
+    async function getTokenDetails(address) {
+        try {
+            const abi = [
+                "function name() view returns (string)",
+                "function symbol() view returns (string)",
+                "function decimals() view public returns (uint8)",
+            ];
 
+            let contract = new ethers.Contract(address, abi, provider);
 
-                <DescribedField description={"name"}>
-                    {details.name}
-                </DescribedField>
+            const decimals = Number(await contract.decimals());
 
-                <DescribedField description={"decimals"}>
-                    {details.decimals}
-                </DescribedField>
-            </Link>
-        );
-    } else {
-        return (
-            <p>
-                Error!
-            </p>
-        )
+            return {
+                name: await contract.name(),
+                symbol: await contract.symbol(),
+                decimals: decimals,
+            };
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
     }
+
+    const [details, setDetails] = useState({});
+
+    useEffect(() => {
+        getTokenDetails(address).then(data => {
+            setDetails(data)
+        });
+    }, [address]);
+
+    return (
+        <Link href={`/manage/${address}`} className={"h-min w-full min-w-full hover:overflow-auto shrink-0 " +
+            "flex flex-row rounded-2xl border-4 p-2 justify-around overflow-hidden"}>
+            <DescribedField description={"symbol"}>
+                {details?.symbol}
+            </DescribedField>
+
+            <DescribedField description={"name"}>
+                {details?.name}
+            </DescribedField>
+
+            <DescribedField description={"decimals"}>
+                {details?.decimals}
+            </DescribedField>
+        </Link>
+    );
 }

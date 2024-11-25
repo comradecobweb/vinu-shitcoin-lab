@@ -2,6 +2,9 @@
 import db from "@/lib/db";
 
 export default async function getUsersTokens(address) {
+
+    if (!address) return [];
+
     let client;
 
     try {
@@ -9,7 +12,6 @@ export default async function getUsersTokens(address) {
     } catch (err) {
         return null;
     }
-
 
     let result;
     try {

@@ -12,11 +12,9 @@ export function check(amount, decimals) {
     }
 }
 
-
 export function getBalance(amount, decimals) {
     return BigInt(amount) / BigInt(10) ** BigInt(decimals);
 }
-
 
 export async function haveEnough(user, token, amount) {
     try {
@@ -76,36 +74,6 @@ export async function getTokenDecimals(address) {
         let contract = new ethers.Contract(address, abi, provider);
 
         return Number(await contract.decimals());
-    } catch (e) {
-        console.log(e);
-        return null;
-    }
-}
-
-
-export async function getTokenDetails(address) {
-    try {
-        const provider = new ethers.JsonRpcProvider(rpcUrl);
-
-        const abi = [
-            "function name() view returns (string)",
-            "function symbol() view returns (string)",
-            "function decimals() view public returns (uint8)",
-            "function totalSupply() public view returns (uint256)"
-        ];
-
-
-        let contract = new ethers.Contract(address, abi, provider);
-
-
-        const decimals = Number(await contract.decimals());
-
-        return {
-            name: await contract.name(),
-            symbol: await contract.symbol(),
-            decimals: decimals,
-            totalSupply: Number(await getBalance(await contract.totalSupply(), decimals))
-        };
     } catch (e) {
         console.log(e);
         return null;

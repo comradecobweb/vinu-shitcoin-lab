@@ -21,12 +21,7 @@ export default function RootLayout({children}) {
     return (
         <html lang="en" className={"h-svh w-svw min-h-full min-w-full p-5"}>
         <body className={clsx(inter.className, "flex flex-col w-full h-full overflow-hidden")}>
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange>
-
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <Header className={"mt-2 mb-2"}/>
             <div className={"self-stretch h-full flex justify-center overflow-y-auto mt-5 mb-5"}>
                 <div className={"w-full h-full sm:w-5/6 lg:w-4/6"} id={'core'}>

@@ -5,7 +5,7 @@ import {z} from "zod";
 import {check, haveEnough} from "@/lib/lib";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {BrowserProvider, ethers} from "ethers";
+import {ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
@@ -13,14 +13,14 @@ import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
 import {useEthersSigner} from "@/hooks/useEthers";
+import {useAppKitAccount} from "@reown/appkit/react";
 
 export default function Burn() {
-
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const signer = useEthersSigner()
-    const {address} = useWeb3ModalAccount();
+    const {address} = useAppKitAccount()
     const [paused] = useContext(pausedContext);
 
     const [decimals, setDecimals] = useState(18);
@@ -29,7 +29,6 @@ export default function Burn() {
         getTokenDecimals(token).then(data => setDecimals(data));
     }, [token]);
 
-
     const formSchema = z.object({
         amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
             return check(amount, decimals);
@@ -37,7 +36,6 @@ export default function Burn() {
             return await haveEnough(address, token, amount);
         }, {message: "You don't have enough tokens!"}),
     });
-
 
     const form = useForm(
         {
@@ -58,7 +56,6 @@ export default function Burn() {
             return;
         }
 
-
         try {
             setButtonDisabled(true);
 
@@ -75,7 +72,6 @@ export default function Burn() {
                 description: "Wait for the transaction to be confirmed on the blockchain!",
             });
 
-
             await tx.wait();
 
             toast({
@@ -83,21 +79,16 @@ export default function Burn() {
                 description: "Check your wallet!",
             });
 
-
             setButtonDisabled(false);
         } catch (e) {
             console.log(e);
-            if (e.info.error.code === 4001) {
-                toast({
-                    title: "Oh no!",
-                    description: "You just rejected a transaction!",
-                });
-            } else {
-                toast({
-                    title: "Unexpected error!",
-                    description: "Something went wrong, but we don't know what.",
-                });
-            }
+            toast(e.info.error.code === 4001 ? {
+                title: "Oh no!",
+                description: "You just rejected a transaction!",
+            } : toast({
+                title: "Unexpected error!",
+                description: "Something went wrong, but we don't know what.",
+            }));
             setButtonDisabled(false);
         }
     }

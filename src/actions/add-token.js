@@ -11,7 +11,6 @@ export async function getUserID(address) {
         return null;
     }
 
-
     let result;
     try {
         result = await client.query({
@@ -27,7 +26,6 @@ export async function getUserID(address) {
 
     client.release();
 
-
     if (result.rows.length === 0) {
         if (await addUser(address)) {
             return await getUserID(address);
@@ -38,7 +36,6 @@ export async function getUserID(address) {
         return result.rows[0].id;
     }
 }
-
 
 async function addUser(address) {
     let client;
@@ -64,7 +61,6 @@ async function addUser(address) {
     client.release();
     return true;
 }
-
 
 async function addProperties(properties) {
     let client;
@@ -101,7 +97,6 @@ async function getPropertiesID(properties) {
         return null;
     }
 
-
     let result;
     try {
         result = await client.query({
@@ -116,7 +111,6 @@ async function getPropertiesID(properties) {
 
     client.release();
 
-
     if (result.rows.length === 0) {
         if (await addProperties(properties)) {
             return await getPropertiesID(properties);
@@ -128,16 +122,12 @@ async function getPropertiesID(properties) {
     }
 }
 
-
 export default async function addToken(user, token, properties) {
 
     const user_id = await getUserID(user);
     const properties_id = await getPropertiesID(properties);
 
-
-    if (user_id === null || properties_id === null) {
-        return false;
-    }
+    if (!user_id || !properties_id) return false;
 
     let client;
 

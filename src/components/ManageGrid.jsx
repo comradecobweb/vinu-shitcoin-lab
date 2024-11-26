@@ -10,11 +10,9 @@ import Transfer from "@/components/manage/Transfer";
 import Renounce from "@/components/manage/Renounce";
 import NothingToManage from "@/components/no/NothingToManage";
 
-
 export const pausedContext = createContext(undefined, undefined);
 
 export default function ManageGrid() {
-
     const token = useContext(tokenContext);
     const [properties, setProperties] = useState({});
     const [paused, setPaused] = useState(false);
@@ -24,11 +22,9 @@ export default function ManageGrid() {
         getTokenProperties(token).then(data => setProperties(data));
     }, [token]);
 
-
     useEffect(() => {
         isTokenPaused(token).then(data => setPaused(data));
     }, [token]);
-
 
     useEffect(() => {
         if (properties.mintable === false && properties.burnable === false &&
@@ -36,7 +32,6 @@ export default function ManageGrid() {
             setEmpty(true);
         }
     }, [properties]);
-
 
     if (empty) {
         return <NothingToManage/>

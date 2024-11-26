@@ -1,5 +1,4 @@
 'use client'
-
 import {useAppKit} from '@reown/appkit/react'
 import {useAppKitAccount} from "@reown/appkit/react";
 import {useDisconnect} from '@reown/appkit/react'
@@ -10,16 +9,11 @@ export default function WalletButton() {
     const {open} = useAppKit();
     const {disconnect} = useDisconnect()
 
-    if (isConnected) {
-        return (
-            <Button onClick={disconnect}>
-                Disconnect
-            </Button>
-        )
-    } else {
-        return <Button onClick={open}>
+    return isConnected ?
+        <Button onClick={disconnect}>
+            Disconnect
+        </Button> :
+        <Button onClick={open}>
             Connect
         </Button>
-    }
-
 }

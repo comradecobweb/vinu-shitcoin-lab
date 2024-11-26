@@ -1,6 +1,6 @@
 'use client';
 import {useContext, useEffect, useState} from "react";
-import {BrowserProvider, ethers} from "ethers";
+import {ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
 import {isTokenPaused} from "@/lib/lib";
 import LoadingButton from "@/components/buttons/LoadingButton";
@@ -23,74 +23,44 @@ export default function PauseButton({className}) {
         setDisabled(true);
 
         try {
-            const abi = [
-                "function pause() external",
-                "function unpause() external",
-            ];
+            const abi = ["function pause() external", "function unpause() external",];
 
             let contract = new ethers.Contract(token, abi, signer);
 
-
             let tx;
 
-            if (paused) {
-                tx = await contract.unpause();
-            } else {
-                tx = await contract.pause();
-            }
+            paused ? tx = await contract.unpause() : tx = await contract.pause();
 
             toast({
-                title: "Working...",
-                description: "Wait for the transaction to be confirmed on the blockchain!",
+                title: "Working...", description: "Wait for the transaction to be confirmed on the blockchain!",
             });
-
 
             await tx.wait();
 
-            if (paused) {
-                toast({
-                    title: "Unpaused!",
-                    description: "You can make transactions again!",
-                });
-            } else {
-                toast({
-                    title: "Paused!",
-                    description: "You can't make transactions now!",
-                });
-            }
+            toast(paused ? {
+                title: "Unpaused!", description: "You can make transactions again!",
+            } : {
+                title: "Paused!", description: "You can't make transactions now!",
+            })
 
             setPaused(!paused);
         } catch (e) {
             console.log(e);
-            if (e.info.error.code === 4001) {
-                toast({
-                    title: "Oh no!",
-                    description: "You just rejected a transaction!",
-                });
-            } else {
-                toast({
-                    title: "Unexpected error!",
-                    description: "Something went wrong, but we don't know what.",
-                });
-            }
+            toast(e.info.error.code === 4001 ? {
+                title: "Oh no!", description: "You just rejected a transaction!",
+            } : {
+                title: "Unexpected error!", description: "Something went wrong, but we don't know what.",
+            });
         }
 
         setDisabled(false);
     }
 
-
-    if (paused) {
-        return (
-            <LoadingButton loading={disabled} onClick={onClick} className={className}>
-                Unpause
-            </LoadingButton>
-        )
-    } else {
-        return (
-            <LoadingButton loading={disabled} onClick={onClick} className={className}>
-                Pause
-            </LoadingButton>
-        )
-    }
-
+    return paused ?
+        <LoadingButton loading={disabled} onClick={onClick} className={className}>
+            Unpause
+        </LoadingButton> :
+        <LoadingButton loading={disabled} onClick={onClick} className={className}>
+            Pause
+        </LoadingButton>
 }

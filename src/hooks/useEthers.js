@@ -1,3 +1,4 @@
+'use client'
 import {BrowserProvider, FallbackProvider, JsonRpcProvider, JsonRpcSigner} from 'ethers'
 import {useMemo} from 'react'
 import {useClient, useConnectorClient} from 'wagmi'

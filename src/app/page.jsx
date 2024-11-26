@@ -13,11 +13,8 @@ import Link from "next/link";
 export default async function Home() {
     return (
         <div className={"flex justify-center align-middle h-full"}>
-
-
             <div className={"flex flex-col lg:flex-row lg:items-baseline"}>
                 <section className={"lg:w-1/2 lg:pr-2 md:flex lg:align-middle"}>
-
                     <div>
                         <h1 className={"text-2xl mb-3"}>
                             What is this?
@@ -25,10 +22,7 @@ export default async function Home() {
 
                         <Description/>
                     </div>
-
-
                 </section>
-
 
                 <section className={"lg:w-1/2 lg:pl-2"}>
                     <h1 className={"text-2xl mt-3 mb-3"}>

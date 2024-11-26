@@ -11,7 +11,6 @@ export default async function countTokens() {
         return null;
     }
 
-
     let result;
     try {
         result = await client.query(`SELECT count(tokens.id) FROM tokens;`);
@@ -22,7 +21,6 @@ export default async function countTokens() {
     }
 
     client.release();
-
 
     return result.rows[0].count;
 }

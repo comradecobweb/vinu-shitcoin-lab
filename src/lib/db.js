@@ -12,5 +12,4 @@ if (!db) {
     });
 }
 
-
 export default db;

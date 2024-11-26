@@ -20,21 +20,17 @@ export async function haveEnough(user, token, amount) {
     try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);
 
-
         const abi = [
             "function decimals() view public returns (uint8)",
             "function balanceOf(address _owner) public view returns (uint256 balance)"
         ];
 
-
         let contract = new ethers.Contract(token, abi, provider);
-
 
         const decimals = await contract.decimals();
         const raw_balance = await contract.balanceOf(user);
 
         const balance = getBalance(raw_balance, decimals);
-
 
         return BigInt(balance) >= BigInt(amount);
     } catch (e) {
@@ -47,14 +43,11 @@ export async function isTokenPaused(token) {
     try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);
 
-
         const abi = [
             "function paused() view returns (bool)"
         ];
 
-
         let contract = new ethers.Contract(token, abi, provider);
-
 
         return Boolean(await contract.paused());
     } catch (e) {

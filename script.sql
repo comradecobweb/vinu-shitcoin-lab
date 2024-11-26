@@ -17,8 +17,6 @@ CREATE TABLE IF NOT EXISTS properties(
     UNIQUE (pausable, burnable, mintable, ownable)
 );
 
-
-
 CREATE TABLE if NOT EXISTS tokens(
     id serial PRIMARY KEY,
     address char(42) NOT NULL UNIQUE,

@@ -32,7 +32,6 @@ export default function CreationForm() {
     const {address, isConnected} = useAppKitAccount()
     const signer = useEthersSigner()
 
-
     const formSchema = z.object({
         name: z.string().min(1, {
             message: "Name must be at least 1 characters!",
@@ -49,7 +48,6 @@ export default function CreationForm() {
         mintable: z.boolean(),
         ownable: z.boolean()
     });
-
 
     async function onSubmit(values) {
         if (!isConnected) {
@@ -78,7 +76,6 @@ export default function CreationForm() {
                     mintable: false,
                     ownable: false
                 },
-
         }
     );
 
@@ -241,7 +238,6 @@ export default function CreationForm() {
                         )}
                     />
 
-
                     <div className={"size-full sm:col-span-2 md:col-span-1 flex flex-row justify-center"}>
                         <SubmitButton className={"self-center w-1/2 md:w-full"} loading={disabled}>
                             Generate & Deploy
@@ -268,21 +264,17 @@ export default function CreationForm() {
                                 setDisabled(true);
                                 const contract_source = await generateContract(tokenProperties);
 
-
                                 const factoryERC20
                                     = new ContractFactory(contract_source.abi, contract_source.bytecode, signer);
 
                                 const contractERC20 = await factoryERC20.deploy();
 
-
                                 let token_address = await contractERC20.getAddress();
-
 
                                 toast({
                                     title: "Wait for contract deployment on the blockchain...",
                                     description: "This shouldn't take long.",
                                 });
-
 
                                 await contractERC20.waitForDeployment();
                                 await addToken(address, token_address, tokenProperties);
@@ -296,17 +288,13 @@ export default function CreationForm() {
                             } catch (e) {
                                 try {
                                     console.log(e);
-                                    if (e.info.error.code === 4001) {
-                                        toast({
-                                            title: "Oh no!",
-                                            description: "You just rejected a transaction!",
-                                        });
-                                    } else {
-                                        toast({
-                                            title: "Unexpected error!",
-                                            description: "Something went wrong, but we don't know what.",
-                                        });
-                                    }
+                                    toast(e.info.error.code === 4001 ? {
+                                        title: "Oh no!",
+                                        description: "You just rejected a transaction!",
+                                    } : {
+                                        title: "Unexpected error!",
+                                        description: "Something went wrong, but we don't know what.",
+                                    });
                                     setDisabled(false);
                                 } catch (ee) {
                                     setDisabled(false);

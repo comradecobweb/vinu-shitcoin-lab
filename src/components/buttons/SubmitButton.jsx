@@ -6,6 +6,5 @@ export default function SubmitButton({children, ...props}) {
         <LoadingButton loading={props.loading} type={"submit"} {...props}>
             {children}
         </LoadingButton>
-
     );
 }

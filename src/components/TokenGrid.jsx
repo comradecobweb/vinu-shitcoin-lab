@@ -5,7 +5,6 @@ import NoTokens from "@/components/no/NoTokens";
 import {useEffect, useState} from "react";
 
 export default function TokenGrid({address}) {
-
     const [tokens, setTokens] = useState([]);
 
     useEffect(() => {

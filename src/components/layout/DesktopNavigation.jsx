@@ -15,7 +15,6 @@ export default async function DesktopNavigation({className}) {
             <NavigationMenu className={"flex flex-row justify-evenly"}>
                 <NavigationMenuList>
 
-
                     <NavigationMenuItem>
                         <NavigationMenuLink href="/create">
                             Create

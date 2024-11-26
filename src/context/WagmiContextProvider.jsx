@@ -1,5 +1,4 @@
 'use client'
-
 import {wagmiAdapter, projectId, epheremy_testnet} from '@/config'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {createAppKit} from '@reown/appkit/react'

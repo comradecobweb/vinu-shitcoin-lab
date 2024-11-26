@@ -1,5 +1,4 @@
 'use server';
-
 import db from "@/lib/db";
 
 export default async function getTokenProperties(address) {
@@ -10,7 +9,6 @@ export default async function getTokenProperties(address) {
     } catch (err) {
         return null;
     }
-
 
     let result;
     try {
@@ -24,7 +22,6 @@ export default async function getTokenProperties(address) {
     }
 
     client.release();
-
 
     return {
         pausable: result.rows[0].pausable,

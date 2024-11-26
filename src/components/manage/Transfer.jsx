@@ -4,7 +4,7 @@ import {z} from "zod";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {toast} from "@/components/ui/use-toast";
-import {BrowserProvider, ethers} from "ethers";
+import {ethers} from "ethers";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {
@@ -32,13 +32,11 @@ export default function Transfer() {
     const signer = useEthersSigner()
     const [paused] = useContext(pausedContext);
 
-
     const formSchema = z.object({
         address: z.string().refine(() => {
             return ethers.isAddress(address);
         }),
     });
-
 
     const form = useForm(
         {
@@ -58,7 +56,6 @@ export default function Transfer() {
             });
             return;
         }
-
         setAddress(values.address);
         setDialogVisible(true);
     }
@@ -89,7 +86,6 @@ export default function Transfer() {
                             </FormItem>
                         )}
                     />
-
                 </form>
             </div>
             <AlertDialog open={dialogVisible} onOpenChange={setDialogVisible}>
@@ -112,14 +108,12 @@ export default function Transfer() {
 
                                 let contract = new ethers.Contract(token, abi, signer);
 
-
                                 let tx = await contract.transferOwnership(address);
 
                                 toast({
                                     title: "Working...",
                                     description: "Wait for the transaction to be confirmed on the blockchain!",
                                 });
-
 
                                 await tx.wait();
 
@@ -130,23 +124,17 @@ export default function Transfer() {
                                     description: "Now a new owner is entering the game!",
                                 });
 
-
                                 setButtonDisabled(false);
-
                                 router.push('/manage');
                             } catch (e) {
                                 console.log(e);
-                                if (e.info.error.code === 4001) {
-                                    toast({
-                                        title: "Oh no!",
-                                        description: "You just rejected a transaction!",
-                                    });
-                                } else {
-                                    toast({
-                                        title: "Unexpected error!",
-                                        description: "Something went wrong, but we don't know what.",
-                                    });
-                                }
+                                toast(e.info.error.code === 4001 ? {
+                                    title: "Oh no!",
+                                    description: "You just rejected a transaction!",
+                                } : {
+                                    title: "Unexpected error!",
+                                    description: "Something went wrong, but we don't know what.",
+                                });
                                 setButtonDisabled(false);
                             }
                         }}>Transfer</AlertDialogAction>

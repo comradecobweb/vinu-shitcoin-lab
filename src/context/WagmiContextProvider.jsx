@@ -1,8 +1,9 @@
 'use client'
-import {wagmiAdapter, projectId, epheremy_testnet} from '@/config'
+import {wagmiAdapter, projectId, networks, vinuChain, epheremyTestnet} from '@/config'
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query'
 import {createAppKit} from '@reown/appkit/react'
 import {cookieToInitialState, WagmiProvider} from 'wagmi'
+import {isDev} from "@/lib/lib";
 
 const url = process.env.NEXT_PUBLIC_URL;
 const queryClient = new QueryClient()
@@ -21,8 +22,8 @@ const metadata = {
 const modal = createAppKit({
     adapters: [wagmiAdapter],
     projectId,
-    networks: [epheremy_testnet],
-    defaultNetwork: epheremy_testnet,
+    networks: networks,
+    defaultNetwork: isDev ? epheremyTestnet : vinuChain,
     metadata: metadata,
     features: {
         analytics: true

@@ -3,8 +3,7 @@ import db from "@/lib/db";
 import getTokenProperties from "@/actions/token-properties";
 import {ethers} from "ethers";
 import {getUserID} from "@/actions/add-token";
-
-const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
+import rpcUrl from "@/lib/rpcUrl";
 
 async function getOwnerFromChain(address) {
     try {

@@ -1,6 +1,7 @@
 import {ethers} from "ethers";
+import rpcUrl from "@/lib/rpcUrl";
 
-const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL;
+export const isDev = process.env.NODE_ENV === 'development';
 
 const uint256 = 115792089237316195423570985008687907853269984665640564039457584007913129639935;
 

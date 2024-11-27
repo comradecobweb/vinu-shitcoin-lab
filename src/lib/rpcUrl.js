@@ -1,5 +1,3 @@
-import {isDev} from "@/lib/lib";
-import {epheremyTestnet, vinuChain} from "@/config";
-
-const rpcUrl = isDev ? epheremyTestnet.rpcUrls.default.http[0] : vinuChain.rpcUrls.default.http[0];
+const rpcUrl =  process.env.NODE_ENV === 'development' ? 'https://otter.bordel.wtf/erigon'
+    : 'https://rpc.vinuchain.org'
 export default rpcUrl;

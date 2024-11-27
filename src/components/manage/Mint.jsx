@@ -4,27 +4,23 @@ import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import {toast} from "@/components/ui/use-toast";
-import {getTokenDecimals} from "@/lib/lib";
 import {check} from "@/lib/lib";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
 import {useAppKitAccount} from "@reown/appkit/react";
 import useTokenInteractions from "@/hooks/useTokenInteractions";
+import useTokenDetails from "@/hooks/useTokenDetails";
 
 export default function Mint() {
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const {address} = useAppKitAccount();
-    const [decimals, setDecimals] = useState(18);
+    const {decimals} = useTokenDetails(token)
     const [paused] = useContext(pausedContext);
-
-    useEffect(() => {
-        getTokenDecimals(token).then(data => setDecimals(data));
-    }, [token]);
 
     const {mint} = useTokenInteractions(token);
 

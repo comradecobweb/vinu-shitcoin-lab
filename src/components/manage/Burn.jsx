@@ -1,6 +1,5 @@
 'use client';
-import {useContext, useEffect, useState} from "react";
-import {getTokenDecimals} from "@/lib/lib";
+import {useContext, useState} from "react";
 import {z} from "zod";
 import {check, haveEnough} from "@/lib/lib";
 import {useForm} from "react-hook-form";
@@ -13,6 +12,7 @@ import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
 import {useAppKitAccount} from "@reown/appkit/react";
 import useTokenInteractions from "@/hooks/useTokenInteractions";
+import useTokenDetails from "@/hooks/useTokenDetails";
 
 export default function Burn() {
     const token = useContext(tokenContext);
@@ -20,12 +20,8 @@ export default function Burn() {
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const {address} = useAppKitAccount()
     const [paused] = useContext(pausedContext);
-    const [decimals, setDecimals] = useState(18);
+    const {decimals} = useTokenDetails(token)
     const {burn} = useTokenInteractions(token)
-
-    useEffect(() => {
-        getTokenDecimals(token).then(data => setDecimals(data));
-    }, [token]);
 
     const formSchema = z.object({
         amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {

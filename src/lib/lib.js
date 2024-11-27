@@ -55,20 +55,3 @@ export async function isTokenPaused(token) {
         return false;
     }
 }
-
-export async function getTokenDecimals(address) {
-    try {
-        const provider = new ethers.JsonRpcProvider(rpcUrl);
-
-        const abi = [
-            "function decimals() view public returns (uint8)",
-        ];
-
-        let contract = new ethers.Contract(address, abi, provider);
-
-        return Number(await contract.decimals());
-    } catch (e) {
-        console.log(e);
-        return null;
-    }
-}

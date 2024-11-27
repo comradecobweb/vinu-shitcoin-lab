@@ -12,33 +12,6 @@ export function check(amount, decimals) {
     }
 }
 
-export function getBalance(amount, decimals) {
-    return BigInt(amount) / BigInt(10) ** BigInt(decimals);
-}
-
-export async function haveEnough(user, token, amount) {
-    try {
-        const provider = new ethers.JsonRpcProvider(rpcUrl);
-
-        const abi = [
-            "function decimals() view public returns (uint8)",
-            "function balanceOf(address _owner) public view returns (uint256 balance)"
-        ];
-
-        let contract = new ethers.Contract(token, abi, provider);
-
-        const decimals = await contract.decimals();
-        const raw_balance = await contract.balanceOf(user);
-
-        const balance = getBalance(raw_balance, decimals);
-
-        return BigInt(balance) >= BigInt(amount);
-    } catch (e) {
-        console.log(e);
-        return null;
-    }
-}
-
 export async function isTokenPaused(token) {
     try {
         const provider = new ethers.JsonRpcProvider(rpcUrl);

@@ -1,7 +1,7 @@
 'use client';
 import {useContext, useState} from "react";
 import {z} from "zod";
-import {check, haveEnough} from "@/lib/lib";
+import {check} from "@/lib/lib";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {toast} from "@/components/ui/use-toast";
@@ -13,6 +13,8 @@ import {pausedContext} from "@/components/ManageGrid";
 import {useAppKitAccount} from "@reown/appkit/react";
 import useTokenInteractions from "@/hooks/useTokenInteractions";
 import useTokenDetails from "@/hooks/useTokenDetails";
+import {ethers} from "ethers";
+import {useEthersProvider} from "@/hooks/useEthers";
 
 export default function Burn() {
     const token = useContext(tokenContext);
@@ -22,6 +24,26 @@ export default function Burn() {
     const [paused] = useContext(pausedContext);
     const {decimals} = useTokenDetails(token)
     const {burn} = useTokenInteractions(token)
+    const provider = useEthersProvider()
+
+    async function haveEnough(user, token, amount) {
+        try {
+            const abi = [
+                "function balanceOf(address _owner) public view returns (uint256 balance)"
+            ];
+
+            const contract = new ethers.Contract(token, abi, provider);
+
+            const raw_balance = await contract.balanceOf(user);
+
+            const balance = BigInt(raw_balance) / BigInt(10) ** BigInt(decimals);
+
+            return BigInt(balance) >= BigInt(amount);
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
+    }
 
     const formSchema = z.object({
         amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {

@@ -130,7 +130,7 @@ async function getSources(values) {
 
     function read(label) {
         const file = label.slice(label.lastIndexOf('/') + 1);
-        sources[label] = {content: fs.readFileSync(path.resolve('src/lib/openzeppelin', file), 'utf-8')};
+        sources[label] = {content: fs.readFileSync(path.resolve('src/openzeppelin', file), 'utf-8')};
     }
 
     read("@openzeppelin/contracts/token/ERC20/ERC20.sol");

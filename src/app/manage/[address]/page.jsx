@@ -9,49 +9,34 @@ import {useAppKitAccount} from "@reown/appkit/react";
 
 export const tokenContext = createContext(undefined, undefined);
 
-
 export default function Page({params}) {
     const token = params.address;
 
     const {isConnected, address} = useAppKitAccount()
 
-    const [allowed, setAllowed] = useState(undefined);
+    const [allowed, setAllowed] = useState(false);
 
     const router = useRouter();
 
-
     useEffect(() => {
-
-        if (address !== null && address !== undefined && isConnected) {
-            checkOwnership(address, token).then(raw_allowed => setAllowed(raw_allowed));
+        if (address && isConnected) {
+            checkOwnership(address, token).then(data => setAllowed(data));
         }
     }, [address, isConnected, router, token]);
 
-
     useEffect(() => {
-        if (!allowed) {
+        if (!allowed)
             AppearsInDB(token).then(appears => {
-                if (!appears) {
-                    router.push('/404');
-                }
+                if (!appears) router.push('/404');
             });
-        }
     }, [token, address, allowed, router]);
 
+    if (!isConnected) return <NoWallet/>
 
-    if (!isConnected) {
-        return <NoWallet/>
-    } else {
-        if (allowed) {
-            return (
-                <tokenContext.Provider value={token}>
-                    <ManageGrid/>
-                </tokenContext.Provider>
-            );
-        } else {
-            return (
-                <NotAllowed/>
-            );
-        }
-    }
+    return allowed ?
+        <tokenContext.Provider value={token}>
+            <ManageGrid/>
+        </tokenContext.Provider>
+        :
+        <NotAllowed/>
 }

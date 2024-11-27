@@ -5,21 +5,19 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import {useContext, useEffect, useState} from "react";
-import {ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
 import {getTokenDecimals} from "@/lib/lib";
 import {check} from "@/lib/lib";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
-import {useEthersSigner} from "@/hooks/useEthers";
 import {useAppKitAccount} from "@reown/appkit/react";
+import useTokenInteractions from "@/hooks/useTokenInteractions";
 
 export default function Mint() {
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const signer = useEthersSigner()
     const {address} = useAppKitAccount();
     const [decimals, setDecimals] = useState(18);
     const [paused] = useContext(pausedContext);
@@ -27,6 +25,8 @@ export default function Mint() {
     useEffect(() => {
         getTokenDecimals(token).then(data => setDecimals(data));
     }, [token]);
+
+    const {mint} = useTokenInteractions(token);
 
     const formSchema = z.object({
         amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
@@ -53,41 +53,18 @@ export default function Mint() {
             return;
         }
 
-        try {
-            setButtonDisabled(true);
+        setButtonDisabled(true);
 
-            const abi = ["function mint(address to, uint256 amount) external"];
+        const value = BigInt(values.amount) * (BigInt(10) ** BigInt(decimals));
 
-            let contract = new ethers.Contract(token, abi, signer);
-
-            const final = BigInt(values.amount) * (BigInt(10) ** BigInt(decimals));
-
-            let tx = await contract.mint(address, final.toString());
-
-            toast({
-                title: "Working...",
-                description: "Wait for the transaction to be confirmed on the blockchain!",
-            });
-
-            await tx.wait();
-
+        await mint(address, value.toString(), async () => {
             toast({
                 title: "Minted!",
                 description: "Check your wallet!",
             });
+        })
 
-            setButtonDisabled(false);
-        } catch (e) {
-            console.log(e);
-            toast(e.info.error.code === 4001 ? {
-                title: "Oh no!",
-                description: "You just rejected a transaction!",
-            } : {
-                title: "Unexpected error!",
-                description: "Something went wrong, but we don't know what.",
-            });
-            setButtonDisabled(false);
-        }
+        setButtonDisabled(false);
     }
 
     return (

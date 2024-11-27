@@ -21,7 +21,7 @@ import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {updateOwner} from "@/actions/check-ownership";
 import {pausedContext} from "@/components/ManageGrid";
-import {useEthersSigner} from "@/hooks/useEthers";
+import useTokenInteractions from "@/hooks/useTokenInteractions";
 
 export default function Transfer() {
     const router = useRouter();
@@ -29,8 +29,8 @@ export default function Transfer() {
     const [dialogVisible, setDialogVisible] = useState(false);
     const [address, setAddress] = useState('');
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const signer = useEthersSigner()
     const [paused] = useContext(pausedContext);
+    const {transferOwnership} = useTokenInteractions(token);
 
     const formSchema = z.object({
         address: z.string().refine(() => {
@@ -101,22 +101,9 @@ export default function Transfer() {
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction onClick={async () => {
-                            try {
-                                setButtonDisabled(true);
 
-                                const abi = ["function transferOwnership(address newOwner) external"];
-
-                                let contract = new ethers.Contract(token, abi, signer);
-
-                                let tx = await contract.transferOwnership(address);
-
-                                toast({
-                                    title: "Working...",
-                                    description: "Wait for the transaction to be confirmed on the blockchain!",
-                                });
-
-                                await tx.wait();
-
+                            setButtonDisabled(true);
+                            await transferOwnership(address, async () => {
                                 await updateOwner(address, token);
 
                                 toast({
@@ -124,19 +111,10 @@ export default function Transfer() {
                                     description: "Now a new owner is entering the game!",
                                 });
 
-                                setButtonDisabled(false);
                                 router.push('/manage');
-                            } catch (e) {
-                                console.log(e);
-                                toast(e.info.error.code === 4001 ? {
-                                    title: "Oh no!",
-                                    description: "You just rejected a transaction!",
-                                } : {
-                                    title: "Unexpected error!",
-                                    description: "Something went wrong, but we don't know what.",
-                                });
-                                setButtonDisabled(false);
-                            }
+                            });
+                            setButtonDisabled(false);
+
                         }}>Transfer</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

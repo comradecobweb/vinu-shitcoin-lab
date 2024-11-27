@@ -5,25 +5,23 @@ import {z} from "zod";
 import {check, haveEnough} from "@/lib/lib";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
-import {useEthersSigner} from "@/hooks/useEthers";
 import {useAppKitAccount} from "@reown/appkit/react";
+import useTokenInteractions from "@/hooks/useTokenInteractions";
 
 export default function Burn() {
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const signer = useEthersSigner()
     const {address} = useAppKitAccount()
     const [paused] = useContext(pausedContext);
-
     const [decimals, setDecimals] = useState(18);
+    const {burn} = useTokenInteractions(token)
 
     useEffect(() => {
         getTokenDecimals(token).then(data => setDecimals(data));
@@ -56,41 +54,17 @@ export default function Burn() {
             return;
         }
 
-        try {
-            setButtonDisabled(true);
+        setButtonDisabled(true);
 
-            const abi = ["function burn(uint256 value) external"];
+        const value = BigInt(values.amount) * (BigInt(10) ** BigInt(decimals));
 
-            let contract = new ethers.Contract(token, abi, signer);
-
-            const final = BigInt(values.amount) * (BigInt(10) ** BigInt(decimals));
-
-            let tx = await contract.burn(final.toString());
-
-            toast({
-                title: "Working...",
-                description: "Wait for the transaction to be confirmed on the blockchain!",
-            });
-
-            await tx.wait();
-
+        await burn(value, async () => {
             toast({
                 title: "Burned!",
                 description: "Check your wallet!",
             });
-
-            setButtonDisabled(false);
-        } catch (e) {
-            console.log(e);
-            toast(e.info.error.code === 4001 ? {
-                title: "Oh no!",
-                description: "You just rejected a transaction!",
-            } : toast({
-                title: "Unexpected error!",
-                description: "Something went wrong, but we don't know what.",
-            }));
-            setButtonDisabled(false);
-        }
+        });
+        setButtonDisabled(false);
     }
 
     return (

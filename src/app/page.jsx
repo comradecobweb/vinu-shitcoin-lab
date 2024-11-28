@@ -5,8 +5,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
-
-
 import Description from "@/components/Description";
 import Link from "next/link";
 

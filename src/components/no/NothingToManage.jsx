@@ -6,7 +6,7 @@ export default function NothingToManage() {
             <p>
                 Nothing to do!!!
             </p>
-            <p className={'text-base'}>
+            <p>
                 Your token does not support any management features!
             </p>
         </Center>

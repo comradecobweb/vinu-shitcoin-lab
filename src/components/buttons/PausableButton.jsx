@@ -8,7 +8,7 @@ import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/compon
 export default function PausableButton({children, loading, className, onClick, type}) {
     const [paused] = useContext(pausedContext);
 
-    if (!paused) {
+    if (!paused)
         return loading ?
             <Button type={type} className={className} disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
@@ -18,7 +18,7 @@ export default function PausableButton({children, loading, className, onClick, t
             <Button type={type} className={className} onClick={onClick}>
                 {children}
             </Button>
-    }
+
     return (
         <TooltipProvider>
             <Tooltip>

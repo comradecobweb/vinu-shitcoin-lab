@@ -13,9 +13,7 @@ export default function Page({params}) {
     const token = params.address;
 
     const {isConnected, address} = useAppKitAccount()
-
     const [allowed, setAllowed] = useState(false);
-
     const router = useRouter();
 
     useEffect(() => {

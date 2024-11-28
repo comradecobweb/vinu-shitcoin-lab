@@ -1,7 +1,6 @@
 'use server';
 import TokenForm from "@/components/CreationForm";
 
-export default async function Page()
-{
-    return(<TokenForm/>);
+export default async function Page() {
+    return <TokenForm/>;
 }

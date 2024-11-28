@@ -1,8 +1,7 @@
 import Center from "@/components/Center";
 
-export default function NotAllowed()
-{
-    return(
+export default function NotAllowed() {
+    return (
         <Center>
             <p>
                 Not allowed!!!

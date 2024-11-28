@@ -1,13 +1,12 @@
 import Center from "@/components/Center";
 
-export default function NothingToManage()
-{
-    return(
+export default function NothingToManage() {
+    return (
         <Center>
             <p>
                 Nothing to do!!!
             </p>
-            <p className={'text-base'}>
+            <p>
                 Your token does not support any management features!
             </p>
         </Center>

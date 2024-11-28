@@ -1,12 +1,11 @@
 'use client';
-import {useWeb3Modal } from '@web3modal/ethers/react'
 import {Button} from "@/components/ui/button";
+import {useAppKit} from "@reown/appkit/react";
 
-export default function ConnectButton()
-{
-    const {open} = useWeb3Modal();
-    return(
-        <Button onClick={ ()=>open()}>
+export default function ConnectButton() {
+    const {open} = useAppKit();
+    return (
+        <Button onClick={open}>
             Connect
         </Button>
     );

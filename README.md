@@ -19,7 +19,6 @@ First, download and configure [PostgreSQL](https://www.postgresql.org/). Next cr
 ```env
 NEXT_PUBLIC_PROJECT_ID=
 NEXT_PUBLIC_URL=
-NEXT_PUBLIC_RPC_URL=
 DB_HOST=
 DB_USER=
 DB_PASSWORD=

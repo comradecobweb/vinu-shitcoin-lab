@@ -1,26 +1,10 @@
 'use client'
-import {useWeb3ModalAccount} from "@web3modal/ethers/react";
 import NoWallet from "@/components/no/NoWallet";
-import {Suspense} from "react";
 import TokenGrid from "@/components/TokenGrid";
-import Loading from "@/app/loading";
+import {useAppKitAccount} from "@reown/appkit/react";
 
-const Page = async () =>{
-    const { address, isConnected } = useWeb3ModalAccount();
+export default function Page() {
+    const {isConnected, address} = useAppKitAccount()
 
-
-    if (!isConnected)
-    {
-        return <NoWallet/>
-    }
-    else
-    {
-        return(
-            <Suspense fallback={<Loading/>}>
-                <TokenGrid address={address}/>
-            </Suspense>
-        );
-    }
+    return isConnected ? <TokenGrid address={address}/> : <NoWallet/>
 }
-
-export default Page;

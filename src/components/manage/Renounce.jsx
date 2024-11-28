@@ -1,8 +1,6 @@
 'use client';
 import {useContext, useState} from "react";
-import {useWeb3ModalProvider} from "@web3modal/ethers/react";
 import {useRouter} from "next/navigation";
-import {BrowserProvider, ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
 import {
     AlertDialog, AlertDialogAction, AlertDialogCancel,
@@ -14,21 +12,19 @@ import {
 import {Label} from "@/components/ui/label";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
-import {updateOwner} from "@/app/actions/check-ownership";
+import {updateOwner} from "@/actions/check-ownership";
 import {pausedContext} from "@/components/ManageGrid";
+import useTokenInteractions from "@/hooks/useTokenInteractions";
 
-export default function Renounce()
-{
-
+export default function Renounce() {
     const token = useContext(tokenContext);
     const [dialogVisible, setDialogVisible] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const { walletProvider } = useWeb3ModalProvider();
     const [paused] = useContext(pausedContext);
     const router = useRouter();
+    const {renounce} = useTokenInteractions(token);
 
-
-    return(
+    return (
         <div className={"border-2 p-3 rounded-2xl flex flex-col size-full justify-around items-center"}>
 
             <Label
@@ -67,28 +63,9 @@ export default function Renounce()
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction onClick={async () => {
-                            try {
-                                setButtonDisabled(true);
 
-
-                                const provider = new BrowserProvider(walletProvider);
-                                const signer = await provider.getSigner()
-
-                                const abi = ["function renounceOwnership() external"];
-
-                                let contract = new ethers.Contract(token, abi, signer);
-
-
-                                let tx = await contract.renounceOwnership();
-
-                                toast({
-                                    title: "Working...",
-                                    description: "Wait for the transaction to be confirmed on the blockchain!",
-                                });
-
-
-                                await tx.wait();
-
+                            setButtonDisabled(true);
+                            await renounce(async () => {
                                 await updateOwner('0x0000000000000000000000000000000000000000', token);
 
                                 toast({
@@ -96,25 +73,10 @@ export default function Renounce()
                                     description: "Now no one can manage the token.",
                                 });
 
-
-
-                                setButtonDisabled(false);
                                 router.push('/manage');
-                            } catch (e) {
-                                console.log(e);
-                                if (e.info.error.code === 4001) {
-                                    toast({
-                                        title: "Oh no!",
-                                        description: "You just rejected a transaction!",
-                                    });
-                                } else {
-                                    toast({
-                                        title: "Unexpected error!",
-                                        description: "Something went wrong, but we don't know what.",
-                                    });
-                                }
-                                setButtonDisabled(false);
-                            }
+                            })
+                            setButtonDisabled(false);
+
                         }}>Renounce</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>

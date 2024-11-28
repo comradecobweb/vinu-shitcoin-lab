@@ -1,46 +1,57 @@
 'use client';
-import {useContext, useEffect, useState} from "react";
-import {useWeb3ModalAccount, useWeb3ModalProvider} from "@web3modal/ethers/react";
-import {getTokenDecimals} from "@/lib/lib";
+import {useContext, useState} from "react";
 import {z} from "zod";
-import {check, haveEnough} from "@/lib/lib";
+import {check} from "@/lib/lib";
 import {useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {BrowserProvider, ethers} from "ethers";
 import {toast} from "@/components/ui/use-toast";
 import {Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {Input} from "@/components/ui/input";
 import PausableButton from "@/components/buttons/PausableButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
+import {useAppKitAccount} from "@reown/appkit/react";
+import useTokenInteractions from "@/hooks/useTokenInteractions";
+import useTokenDetails from "@/hooks/useTokenDetails";
+import {ethers} from "ethers";
+import {useEthersProvider} from "@/hooks/useEthers";
 
-export default function Burn()
-{
-
+export default function Burn() {
     const token = useContext(tokenContext);
     const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const { walletProvider } = useWeb3ModalProvider();
-    const { address } = useWeb3ModalAccount();
+    const {address} = useAppKitAccount()
     const [paused] = useContext(pausedContext);
+    const {decimals} = useTokenDetails(token)
+    const {burn} = useTokenInteractions(token)
+    const provider = useEthersProvider()
 
-    const [decimals, setDecimals] = useState(18);
+    async function haveEnough(user, token, amount) {
+        try {
+            const abi = [
+                "function balanceOf(address _owner) public view returns (uint256 balance)"
+            ];
 
-    useEffect(() => {
-        getTokenDecimals(token).then(data => setDecimals(data));
-    }, [token]);
+            const contract = new ethers.Contract(token, abi, provider);
 
+            const raw_balance = await contract.balanceOf(user);
+
+            const balance = BigInt(raw_balance) / BigInt(10) ** BigInt(decimals);
+
+            return BigInt(balance) >= BigInt(amount);
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
+    }
 
     const formSchema = z.object({
-        amount: z.number().int().min(1, {message:"Value must be at least 1 characters!"}).
-        refine(()=>{
+        amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
             return check(amount, decimals);
-        }, {message:"Wrong value!"}).refine(async ()=>
-        {
+        }, {message: "Wrong value!"}).refine(async () => {
             return await haveEnough(address, token, amount);
-        }, {message:"You don't have enough tokens!"}),
+        }, {message: "You don't have enough tokens!"}),
     });
-
 
     const form = useForm(
         {
@@ -52,10 +63,8 @@ export default function Burn()
         }
     );
 
-    async function onSubmit(values)
-    {
-        if (paused)
-        {
+    async function onSubmit(values) {
+        if (paused) {
             toast({
                 title: "Error!",
                 description: "You can't burn paused token!",
@@ -63,58 +72,20 @@ export default function Burn()
             return;
         }
 
+        setButtonDisabled(true);
 
-        try {
-            setButtonDisabled(true);
+        const value = BigInt(values.amount) * (BigInt(10) ** BigInt(decimals));
 
-
-            const provider = new BrowserProvider(walletProvider);
-            const signer = await provider.getSigner()
-
-            const abi = ["function burn(uint256 value) external"];
-
-            let contract = new ethers.Contract(token, abi, signer);
-
-            const final = BigInt(values.amount) * (BigInt(10) ** BigInt(decimals));
-
-            let tx = await contract.burn(final.toString());
-
-            toast({
-                title: "Working...",
-                description: "Wait for the transaction to be confirmed on the blockchain!",
-            });
-
-
-            await tx.wait();
-
+        await burn(value, async () => {
             toast({
                 title: "Burned!",
                 description: "Check your wallet!",
             });
-
-
-            setButtonDisabled(false);
-        }catch (e)
-        {
-            console.log(e);
-            if (e.info.error.code===4001)
-            {
-                toast({
-                    title: "Oh no!",
-                    description: "You just rejected a transaction!",
-                });
-            }else
-            {
-                toast({
-                    title: "Unexpected error!",
-                    description: "Something went wrong, but we don't know what.",
-                });
-            }
-            setButtonDisabled(false);
-        }
+        });
+        setButtonDisabled(false);
     }
 
-    return(
+    return (
         <Form {...form}>
             <div className={"border-2 p-3 rounded-2xl size-full"}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className={'size-full'}>

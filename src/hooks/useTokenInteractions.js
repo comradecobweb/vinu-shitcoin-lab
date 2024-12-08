@@ -78,7 +78,7 @@ export default function useTokenInteractions(token_address) {
 
     async function transferOwnership(user_address, onSuccess) {
         await interaction(async () => {
-            await contract.transferOwnership(user_address)
+            return await contract.transferOwnership(user_address)
         }, onSuccess);
     }
 

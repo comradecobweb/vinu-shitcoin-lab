@@ -1,6 +1,7 @@
 DROP TABLE IF EXISTS tokens;
 DROP TABLE IF EXISTS properties;
 DROP TABLE IF EXISTS accounts;
+DROP TABLE IF EXISTS listings;
 
 CREATE TABLE IF NOT EXISTS accounts(
     id serial PRIMARY KEY,
@@ -25,4 +26,8 @@ CREATE TABLE if NOT EXISTS tokens(
 
     FOREIGN KEY(owner) REFERENCES accounts(id),
     FOREIGN KEY(properties) REFERENCES properties(id)
+);
+
+CREATE TABLE IF NOT EXISTS listings(
+    address char(42) UNIQUE NOT NULL
 );

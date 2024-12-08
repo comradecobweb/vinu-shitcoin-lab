@@ -2,7 +2,6 @@
 import db from "@/lib/db";
 
 export default async function getUsersTokens(address) {
-
     if (!address) return [];
 
     let client;
@@ -16,7 +15,7 @@ export default async function getUsersTokens(address) {
     let result;
     try {
         result = await client.query({
-            text: 'SELECT t.address FROM tokens t INNER JOIN accounts u ON t.deployer = u.id WHERE u.address =$1;',
+            text: 'SELECT t.address FROM tokens t INNER JOIN accounts a ON t.owner = a.id WHERE a.address =$1;',
             values: [address]
         });
     } catch (err) {

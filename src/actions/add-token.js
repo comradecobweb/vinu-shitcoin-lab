@@ -140,7 +140,7 @@ export default async function addToken(user, token, properties) {
 
     try {
         await client.query({
-            text: 'INSERT INTO tokens(address, deployer, properties) VALUES ($1, $2, $3);',
+            text: 'INSERT INTO tokens(address, owner, properties) VALUES ($1, $2, $3);',
             values: [token, user_id, properties_id]
         });
     } catch (err) {

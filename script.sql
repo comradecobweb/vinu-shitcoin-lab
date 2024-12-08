@@ -20,9 +20,9 @@ CREATE TABLE IF NOT EXISTS properties(
 CREATE TABLE if NOT EXISTS tokens(
     id serial PRIMARY KEY,
     address char(42) NOT NULL UNIQUE,
-    deployer int NOT NULL,
+    owner int NOT NULL,
     properties int NOT NULL,
 
-    FOREIGN KEY(deployer) REFERENCES accounts(id),
+    FOREIGN KEY(owner) REFERENCES accounts(id),
     FOREIGN KEY(properties) REFERENCES properties(id)
 );

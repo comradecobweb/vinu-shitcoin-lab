@@ -34,7 +34,7 @@ async function getOwnerFromDB(address) {
     let result;
     try {
         result = await client.query({
-            text: 'SELECT a.address from tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address = $1;',
+            text: 'SELECT a.address from tokens t INNER JOIN accounts a ON t.owner=a.id WHERE t.address = $1;',
             values: [address]
         });
     } catch (err) {
@@ -65,7 +65,7 @@ export async function updateOwner(new_owner, token) {
 
     try {
         await client.query({
-            text: 'UPDATE tokens SET deployer = $1 WHERE address=$2;',
+            text: 'UPDATE tokens SET owner = $1 WHERE address=$2;',
             values: [user_id, token]
         });
     } catch (err) {
@@ -92,7 +92,7 @@ async function checkDB(user, token) {
     try {
         result = await
             client.query({
-                text: 'SELECT t.id FROM tokens t INNER JOIN accounts a ON t.deployer=a.id WHERE t.address=$1 AND a.address=$2;',
+                text: 'SELECT t.id FROM tokens t INNER JOIN accounts a ON t.owner=a.id WHERE t.address=$1 AND a.address=$2;',
                 values: [token, user]
             });
     } catch (err) {
@@ -141,9 +141,7 @@ export default async function checkOwnership(user, token) {
     if (properties.ownable) {
         const chain = await getOwnerFromChain(token);
 
-        if (chain === null || chain === undefined) {
-            return await checkDB(user, token);
-        }
+        if (chain === null || chain === undefined) return await checkDB(user, token);
 
         const db = await getOwnerFromDB(token);
 
@@ -153,7 +151,5 @@ export default async function checkOwnership(user, token) {
         } else {
             return user === chain;
         }
-    } else {
-        return await checkDB(user, token);
-    }
+    } else return await checkDB(user, token);
 }

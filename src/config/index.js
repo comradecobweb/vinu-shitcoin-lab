@@ -9,7 +9,7 @@ if (!projectId) {
 }
 
 export const epheremyTestnet = {
-    id: 39438140,
+    id: 39438141,
     name: 'ephemery-testnet',
     nativeCurrency: {
         name: 'Ether', symbol: 'ETH', decimals: 18

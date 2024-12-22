@@ -1,3 +1,4 @@
+'use server'
 import db from "@/lib/db";
 
 export default async function addListing(address) {
@@ -13,7 +14,7 @@ export default async function addListing(address) {
 
     try {
         await client.query({
-            text: 'INSERT INTO listing(address) VALUES ($1);',
+            text: 'INSERT INTO listings(address) VALUES ($1);',
             values: [address]
         });
     } catch (err) {

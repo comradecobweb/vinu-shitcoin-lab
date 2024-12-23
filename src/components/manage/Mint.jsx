@@ -16,16 +16,15 @@ import useTokenDetails from "@/hooks/useTokenDetails";
 
 export default function Mint() {
     const token = useContext(tokenContext);
-    const [amount, setAmount] = useState(1000);
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const {address} = useAppKitAccount();
     const {decimals} = useTokenDetails(token)
     const [paused] = useContext(pausedContext);
-
     const {mint} = useTokenInteractions(token);
 
     const formSchema = z.object({
-        amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
+        amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"})
+            .refine((amount) => {
             return check(amount, decimals);
         }, {message: "Wrong value!"}),
     });
@@ -50,7 +49,6 @@ export default function Mint() {
         }
 
         setButtonDisabled(true);
-
         const value = BigInt(values.amount) * (BigInt(10) ** BigInt(decimals));
 
         await mint(address, value.toString(), async () => {
@@ -59,7 +57,6 @@ export default function Mint() {
                 description: "Check your wallet!",
             });
         })
-
         setButtonDisabled(false);
     }
 
@@ -72,14 +69,10 @@ export default function Mint() {
                         name="amount"
                         render={({field}) => (
                             <FormItem className={"size-full flex flex-col justify-around items-center"}>
-
                                 <FormLabel>Mint</FormLabel>
                                 <FormControl>
                                     <Input placeholder="mint" type={"number"} {...field}
-                                           onChange={event => {
-                                               field.onChange(+event.target.value);
-                                               setAmount(+event.target.value);
-                                           }}/>
+                                           onChange={event => field.onChange(+event.target.value)}/>
                                 </FormControl>
                                 <FormDescription>
                                     Increases your token amount.

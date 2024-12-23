@@ -17,15 +17,28 @@ export default function useTokenDetails(address) {
                     "function name() view returns (string)",
                     "function symbol() view returns (string)",
                     "function decimals() view public returns (uint8)",
+                    "function paused() view returns (bool)"
                 ];
 
-                let contract = new ethers.Contract(address, abi, provider);
+                const contract = new ethers.Contract(address, abi, provider);
 
-                return {
-                    name: await contract.name(),
-                    symbol: await contract.symbol(),
-                    decimals: Number(await contract.decimals()),
-                };
+                const name = await contract.name()
+                const symbol = await contract.symbol()
+                const decimals = Number(await contract.decimals())
+                let isPaused;
+
+                try {
+                    isPaused = Boolean(await contract.paused());
+                }catch (e){
+                    isPaused = false;
+                }
+
+                return{
+                    name,
+                    symbol,
+                    decimals,
+                    isPaused
+                }
             } catch (e) {
                 console.log(e);
                 return {};

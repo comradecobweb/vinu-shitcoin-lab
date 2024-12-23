@@ -1,20 +1,21 @@
 'use client';
 import {useContext, useEffect, useState} from "react";
 import {toast} from "@/components/ui/use-toast";
-import {isTokenPaused} from "@/lib/lib";
 import LoadingButton from "@/components/buttons/LoadingButton";
 import {tokenContext} from "@/app/manage/[address]/page";
 import {pausedContext} from "@/components/ManageGrid";
 import useTokenInteractions from "@/hooks/useTokenInteractions";
+import useTokenDetails from "@/hooks/useTokenDetails";
 
 export default function PauseButton({className}) {
     const token = useContext(tokenContext);
     const [disabled, setDisabled] = useState(false);
     const [paused, setPaused] = useContext(pausedContext);
+    const {isPaused} = useTokenDetails(token)
 
     useEffect(() => {
-        isTokenPaused(token).then(data => setPaused(data));
-    }, [setPaused, token]);
+        setPaused(isPaused)
+    }, [isPaused, setPaused, token]);
 
     const {pause, unpause} = useTokenInteractions(token);
 
@@ -31,7 +32,6 @@ export default function PauseButton({className}) {
         }
 
         paused ? await unpause(onSuccess) : await pause(onSuccess);
-
         setDisabled(false);
     }
 

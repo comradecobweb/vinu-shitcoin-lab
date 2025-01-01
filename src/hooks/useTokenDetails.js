@@ -4,13 +4,10 @@ import {useEthersProvider} from "@/hooks/useEthers";
 import {ethers} from "ethers";
 
 export default function useTokenDetails(address) {
-
     const provider = useEthersProvider();
     const [details, setDetails] = useState({});
 
     useEffect(() => {
-        if (!address) return {};
-
         async function getTokenDetails(address) {
             try {
                 const abi = [

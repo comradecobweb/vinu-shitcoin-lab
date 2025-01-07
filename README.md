@@ -6,8 +6,9 @@ and ease, because you don`t need to know how to code to make your token. The web
 ## License & contributing
 
 
-This program is distributed under Apache 2.0 License, [see license file](LICENSE.md).
-All forms of contributing are welcome.
+This whole program is distributed under Apache 2.0 License, [see license file](LICENSE.md). Solidity Smart Contracts in 
+[src/contracts](src/contracts) are under [MIT](https://opensource.org/license/mit) license. All forms of contributing
+are welcome.
 
 
 ## How to build it?
@@ -29,6 +30,11 @@ DB_NAME=
 Remember to provide your data there!
 
 Then run:
+```bash
+npm install
+```
+
+and
 
 ```bash
 npm run dev

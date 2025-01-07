@@ -39,7 +39,7 @@ export default function ListingLink({address}) {
     }, [price])
 
     return (
-        <Link href={`/listing/${address}`}
+        <Link href={`/listings/${address}`}
               className={"w-full flex flex-row justify-around rounded-2xl border-4 p-2 overflow-hidden"}>
             <DescribedField description={symbol}>
                 {name}

@@ -1,9 +1,11 @@
 'use client'
 import {useAppKitAccount} from "@reown/appkit/react";
 import useListing from "@/hooks/useListing";
-import {useEffect, useState} from "react";
+import {createContext, useEffect, useState} from "react";
 import ManageListing from "@/components/ManageListing";
 import BuyTokens from "@/components/BuyTokens";
+
+export const listingContext = createContext(undefined, undefined);
 
 export default function Listing({listing}) {
     const {address} = useAppKitAccount()
@@ -14,5 +16,7 @@ export default function Listing({listing}) {
         setIsOwner(address === owner)
     }, [address, owner])
 
-    return isOwner ? <ManageListing listing={listing}/> : <BuyTokens listing={listing}/>
+    return <listingContext.Provider value={listing}>
+        {isOwner ? <ManageListing/> : <BuyTokens/>}
+    </listingContext.Provider>
 }

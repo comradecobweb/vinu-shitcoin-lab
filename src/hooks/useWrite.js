@@ -14,7 +14,7 @@ export default function useWrite(values, onError, onSuccess, onSend = undefined)
             try {
                 const transaction = await provider.getTransaction(hash.toString());
                 await transaction.wait()
-                await onSuccess()
+                onSuccess()
             } catch (e) {
                 await onError(e)
             }

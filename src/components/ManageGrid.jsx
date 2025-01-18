@@ -1,12 +1,12 @@
 'use client';
-import Mint from "@/components/manage/Mint";
-import Burn from "@/components/manage/Burn";
-import Pause from "@/components/manage/Pause";
+import Mint from "@/components/manage-tokens/Mint";
+import Burn from "@/components/manage-tokens/Burn";
+import Pause from "@/components/manage-tokens/Pause";
 import {createContext, useContext, useEffect, useState} from "react";
 import {tokenContext} from "@/app/manage/[address]/page";
 import getTokenProperties from "@/actions/token-properties";
-import Transfer from "@/components/manage/Transfer";
-import Renounce from "@/components/manage/Renounce";
+import Transfer from "@/components/manage-tokens/Transfer";
+import Renounce from "@/components/manage-tokens/Renounce";
 import NothingToManage from "@/components/no/NothingToManage";
 import useTokenDetails from "@/hooks/useTokenDetails";
 

@@ -1,6 +1,6 @@
 'use client'
-import {useContext, useEffect} from "react";
-import {pausedListingContext} from "@/components/ManageListing"
+import {useContext} from "react";
+import {pausedListingContext} from "@/context/PausedListingContext"
 import UnpauseListingButton from "@/components/buttons/UnpauseListingButton";
 import PauseListingButton from "@/components/buttons/PauseListingButton";
 

@@ -1,6 +1,6 @@
 'use client'
 import {useContext} from "react";
-import {pausedListingContext} from "@/components/ManageListing"
+import {pausedListingContext} from "@/context/PausedListingContext"
 import {listingContext} from "@/components/Listing";
 import {Button} from "@/components/ui/button";
 import abi from "@/lib/listing-abi";

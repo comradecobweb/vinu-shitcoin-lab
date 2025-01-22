@@ -9,11 +9,19 @@ import useWrite from "@/hooks/useWrite";
 export default function PauseListingButton() {
     const [paused, setPaused] = useContext(pausedListingContext)
     const listing = useContext(listingContext)
-    const {isFinished, write} = useWrite({
+    const {isFinished, write} = useWrite(() => {
+        setPaused(true)
+    }, (e) => {
+        console.log(e)
+    })
+
+    return <Button disabled={!isFinished} onClick={() => {
+        write(
+            {
                 abi,
                 address: listing,
                 functionName: 'pause',
-            }, (e)=>{console.log(e)}, ()=>{setPaused(true)})
-
-    return <Button disabled={!isFinished} onClick={() => {write()}}>Pause</Button>
+            }
+        )
+    }}>Pause</Button>
 }

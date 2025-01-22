@@ -3,12 +3,12 @@ import {useWriteContract} from "wagmi";
 import {useEthersProvider} from "@/hooks/useEthers";
 import {useCallback, useState} from "react";
 
-export default function useWrite(values, onError, onSuccess, onSend = undefined) {
+export default function useWrite( onSuccess, onError, onSend = undefined) {
     const {writeContractAsync} = useWriteContract()
     const provider = useEthersProvider();
     const [isFinished, setIsFinished] = useState(true)
 
-    const write = useCallback(async () => {
+    const write = useCallback(async (values) => {
         setIsFinished(false)
         writeContractAsync(values, {onError: onError, onSuccess: onSend}).then(async hash => {
             try {
@@ -20,7 +20,7 @@ export default function useWrite(values, onError, onSuccess, onSend = undefined)
             }
             setIsFinished(true)
         })
-    }, [onError, onSend, onSuccess, provider, values, writeContractAsync])
+    }, [onError, onSend, onSuccess, provider, writeContractAsync])
 
     return {
         isFinished, write

@@ -1,6 +1,7 @@
 'use client'
 import Pause from "@/components/manage-listing/Pause";
 import {PausedListingContextProvider} from "@/context/PausedListingContext";
+import Deposit from "@/components/manage-listing/Deposit";
 
 export default function ManageListing() {
 
@@ -10,6 +11,7 @@ export default function ManageListing() {
         " md:grid-cols-3 md:gap-6  md:content-start md:items-start"}>
         <PausedListingContextProvider>
             <Pause/>
+            <Deposit/>
         </PausedListingContextProvider>
     </div>
 }

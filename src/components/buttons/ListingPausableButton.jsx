@@ -28,7 +28,7 @@ export default function ListingPausableButton({children, loading, className, onC
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>Unpause token first!</p>
+                    <p>Unpause listing first!</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>

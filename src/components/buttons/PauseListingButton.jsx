@@ -11,17 +11,13 @@ export default function PauseListingButton() {
     const listing = useContext(listingContext)
     const {isFinished, write} = useWrite(() => {
         setPaused(true)
-    }, (e) => {
-        console.log(e)
     })
 
     return <Button disabled={!isFinished} onClick={() => {
-        write(
-            {
-                abi,
-                address: listing,
-                functionName: 'pause',
-            }
-        )
+        write({
+            abi,
+            address: listing,
+            functionName: 'pause',
+        })
     }}>Pause</Button>
 }

@@ -11,8 +11,6 @@ export default function UnpauseListingButton() {
     const listing = useContext(listingContext)
     const {isFinished, write} = useWrite(() => {
         setPaused(false)
-    }, (e) => {
-        console.log(e)
     })
 
     return <Button disabled={!isFinished} onClick={() => {

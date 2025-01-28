@@ -5,7 +5,7 @@ import {Loader2} from "lucide-react";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {pausedListingContext} from "@/context/PausedListingContext";
 
-export default function ListingPausableButton({children, loading, className, onClick, type}) {
+export default function ListingPausableButton({children, loading, className, onClick, type, disabled}) {
     const [paused] = useContext(pausedListingContext);
 
     if (!paused)
@@ -15,7 +15,7 @@ export default function ListingPausableButton({children, loading, className, onC
                 Please wait
             </Button>
             :
-            <Button type={type} className={className} onClick={onClick}>
+            <Button type={type} className={className} onClick={onClick} disabled={disabled}>
                 {children}
             </Button>
 

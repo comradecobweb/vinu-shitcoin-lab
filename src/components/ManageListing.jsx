@@ -2,6 +2,7 @@
 import Pause from "@/components/manage-listing/Pause";
 import {PausedListingContextProvider} from "@/context/PausedListingContext";
 import Deposit from "@/components/manage-listing/Deposit";
+import Withdraw from "@/components/manage-listing/Withdraw";
 
 export default function ManageListing() {
 
@@ -12,6 +13,7 @@ export default function ManageListing() {
         <PausedListingContextProvider>
             <Pause/>
             <Deposit/>
+            <Withdraw/>
         </PausedListingContextProvider>
     </div>
 }

@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import ManageListing from "@/components/ManageListing";
 import BuyTokens from "@/components/BuyTokens";
 import {ListingContextProvider} from "@/context/ListingContext";
+import {PausedListingContextProvider} from "@/context/PausedListingContext";
 
 export default function Listing({listing}) {
     const {address} = useAppKitAccount()
@@ -16,6 +17,8 @@ export default function Listing({listing}) {
     }, [address, owner])
 
     return <ListingContextProvider listing={listing}>
-        {isOwner ? <ManageListing/> : <BuyTokens/>}
+        <PausedListingContextProvider>
+            {isOwner ? <ManageListing/> : <BuyTokens/>}
+        </PausedListingContextProvider>
     </ListingContextProvider>
 }

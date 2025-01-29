@@ -2,7 +2,7 @@
 import {Label} from "@/components/ui/label";
 import WithdrawButton from "@/components/buttons/WithdrawButton";
 import {useBalance} from "wagmi";
-import {listingContext} from "@/components/Listing";
+import {listingContext} from "@/context/ListingContext";
 import {useContext} from "react";
 
 export default function Withdraw() {

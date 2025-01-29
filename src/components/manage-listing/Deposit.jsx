@@ -1,6 +1,6 @@
 'use client';
 import {useContext} from "react";
-import {listingContext} from "@/components/Listing";
+import {listingContext} from "@/context/ListingContext";
 import useListing from "@/hooks/useListing";
 import {useReadContract} from "wagmi";
 import abi from "@/lib/erc20-abi";

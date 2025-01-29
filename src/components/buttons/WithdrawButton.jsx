@@ -3,7 +3,7 @@ import ListingPausableButton from "@/components/buttons/ListingPausableButton";
 import {useBalance} from "wagmi";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip";
 import {useContext} from "react";
-import {listingContext} from "@/components/Listing";
+import {listingContext} from "@/context/ListingContext";
 import {Button} from "@/components/ui/button";
 import useWrite from "@/hooks/useWrite";
 import {toast} from "@/components/ui/use-toast";

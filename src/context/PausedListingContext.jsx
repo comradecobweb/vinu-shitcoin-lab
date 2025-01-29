@@ -2,7 +2,7 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {useContractRead} from "wagmi";
 import abi from "@/lib/listing-abi";
-import {listingContext} from "@/components/Listing";
+import {listingContext} from "@/context/ListingContext";
 
 export const pausedListingContext = createContext(undefined, undefined);
 

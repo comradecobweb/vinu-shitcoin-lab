@@ -1,8 +1,7 @@
 'use client'
 import {createContext, useContext, useEffect, useState} from "react";
-import {useContractRead} from "wagmi";
-import abi from "@/lib/listing-abi";
 import {listingContext} from "@/context/ListingContext";
+import useListing from "@/hooks/useListing";
 
 export const pausedListingContext = createContext(undefined, undefined);
 
@@ -10,14 +9,10 @@ export const pausedListingContext = createContext(undefined, undefined);
 export function PausedListingContextProvider({children}) {
     const listing = useContext(listingContext)
     const [paused, setPaused] = useState(false)
-    const {data, isSuccess} = useContractRead({
-        address: listing,
-        abi: abi,
-        functionName: 'isPaused',
-    })
+    const {isPaused} = useListing(listing)
     useEffect(() => {
-        if (isSuccess) setPaused(Boolean(data))
-    }, [data, isSuccess, setPaused]);
+         setPaused(isPaused)
+    }, [isPaused, setPaused]);
 
     return <pausedListingContext.Provider value={[paused, setPaused]}>
         {children}

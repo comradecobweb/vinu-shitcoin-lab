@@ -51,8 +51,8 @@ export default function Transfer() {
     async function onSubmit(values) {
         if (paused) {
             toast({
-                title: "Error!",
-                description: "You can't transfer ownership of paused token!",
+                title: "Fehler!",
+                description: "Sie können die Eigentümerschaft eines pausierten Tokens nicht übertragen!",
             });
             return;
         }
@@ -69,19 +69,19 @@ export default function Transfer() {
                         name="address"
                         render={({field}) => (
                             <FormItem className={"size-full flex flex-col justify-around items-center"}>
-                                <FormLabel>Transfer ownership</FormLabel>
+                                <FormLabel>Eigentümerschaft übertragen</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Address" {...field} onChange={event => {
+                                    <Input placeholder="Adresse" {...field} onChange={event => {
                                         field.onChange(event.target.value);
                                         setAddress(event.target.value);
                                     }}/>
                                 </FormControl>
                                 <FormDescription>
-                                    Changes the owner of the token.
+                                    Ändert den Eigentümer des Tokens.
                                 </FormDescription>
                                 <FormMessage/>
                                 <PausableButton loading={buttonDisabled}>
-                                    Transfer ownership
+                                    Eigentümerschaft übertragen
                                 </PausableButton>
                             </FormItem>
                         )}
@@ -91,15 +91,15 @@ export default function Transfer() {
             <AlertDialog open={dialogVisible} onOpenChange={setDialogVisible}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Transfer ownership</AlertDialogTitle>
+                        <AlertDialogTitle>Eigentümerschaft übertragen</AlertDialogTitle>
                         <AlertDialogDescription>
-                            Due to the properties of the blockchain network,
-                            you will not be able to undo this action.
-                            This means you will no longer be able to manage your token.
+                            Aufgrund der Eigenschaften des Blockchain-Netzwerks
+                            können Sie diese Aktion nicht rückgängig machen.
+                            Das bedeutet, dass Sie Ihren Token nicht mehr verwalten können.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>Abbrechen</AlertDialogCancel>
                         <AlertDialogAction onClick={async () => {
 
                             setButtonDisabled(true);
@@ -107,15 +107,15 @@ export default function Transfer() {
                                 await updateOwner(address, token);
 
                                 toast({
-                                    title: "Token ownership transferred!",
-                                    description: "Now a new owner is entering the game!",
+                                    title: "Token-Eigentümerschaft übertragen!",
+                                    description: "Jetzt übernimmt ein neuer Besitzer!",
                                 });
 
                                 router.push('/manage');
                             });
                             setButtonDisabled(false);
 
-                        }}>Transfer</AlertDialogAction>
+                        }}>Übertragen</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

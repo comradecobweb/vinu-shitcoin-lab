@@ -4,10 +4,10 @@ export default function NotAllowed() {
     return (
         <Center>
             <p>
-                Not allowed!!!
+                Nicht erlaubt!!!
             </p>
             <p className={'text-base'}>
-                Only the creator of the token can manage it!
+                Nur der Ersteller des Tokens kann ihn verwalten!
             </p>
         </Center>
     )

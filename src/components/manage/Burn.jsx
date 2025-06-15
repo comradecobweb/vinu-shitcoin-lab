@@ -46,11 +46,11 @@ export default function Burn() {
     }
 
     const formSchema = z.object({
-        amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
+        amount: z.number().int().min(1, {message: "Wert muss mindestens 1 sein!"}).refine(() => {
             return check(amount, decimals);
-        }, {message: "Wrong value!"}).refine(async () => {
+        }, {message: "Falscher Wert!"}).refine(async () => {
             return await haveEnough(address, token, amount);
-        }, {message: "You don't have enough tokens!"}),
+        }, {message: "Sie haben nicht genügend Token!"}),
     });
 
     const form = useForm(
@@ -66,8 +66,8 @@ export default function Burn() {
     async function onSubmit(values) {
         if (paused) {
             toast({
-                title: "Error!",
-                description: "You can't burn paused token!",
+                title: "Fehler!",
+                description: "Sie können einen pausierten Token nicht verbrennen!",
             });
             return;
         }
@@ -78,8 +78,8 @@ export default function Burn() {
 
         await burn(value, async () => {
             toast({
-                title: "Burned!",
-                description: "Check your wallet!",
+                title: "Verbrannt!",
+                description: "Überprüfen Sie Ihre Wallet!",
             });
         });
         setButtonDisabled(false);
@@ -95,20 +95,20 @@ export default function Burn() {
                         render={({field}) => (
                             <FormItem className={"size-full flex flex-col justify-around items-center"}>
 
-                                <FormLabel>Burn</FormLabel>
+                                <FormLabel>Verbrennen</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="burn" type={"number"} {...field}
+                                    <Input placeholder="Verbrennen" type={"number"} {...field}
                                            onChange={event => {
                                                field.onChange(+event.target.value);
                                                setAmount(+event.target.value);
                                            }}/>
                                 </FormControl>
                                 <FormDescription>
-                                    Decreases your token amount.
+                                    Verringert Ihre Token-Menge.
                                 </FormDescription>
                                 <FormMessage/>
                                 <PausableButton loading={buttonDisabled}>
-                                    Burn
+                                    Verbrennen
                                 </PausableButton>
                             </FormItem>
                         )}

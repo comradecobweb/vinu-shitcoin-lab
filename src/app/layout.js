@@ -12,14 +12,14 @@ const inter = Inter({subsets: ["latin"]});
 
 export const metadata = {
     title: "Vinu Shitcoin Lab",
-    description: "The best token creation tool in Vinu Chain!",
+    description: "Das beste Token-Erstellungstool in der Vinu Chain!",
     keywords: "Vinu, tokens, shitcoins, ERC-20, Comrade Cobweb"
 };
 
 export default function RootLayout({children}) {
     const cookies = headers().get('cookie')
     return (
-        <html lang="en" className={"h-svh w-svw min-h-full min-w-full p-5"}>
+        <html lang="de" className={"h-svh w-svw min-h-full min-w-full p-5"}>
         <body className={clsx(inter.className, "flex flex-col w-full h-full overflow-hidden")}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <Header className={"mt-2 mb-2"}/>

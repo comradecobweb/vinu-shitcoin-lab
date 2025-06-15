@@ -11,9 +11,9 @@ export default function WalletButton() {
 
     return isConnected ?
         <Button onClick={disconnect}>
-            Disconnect
+            Trennen
         </Button> :
         <Button onClick={open}>
-            Connect
+            Verbinden
         </Button>
 }

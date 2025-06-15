@@ -11,11 +11,11 @@ export default async function FloatNavigation({className}) {
                 className={"w-full lg:w-1/2 flex flex-row justify-evenly sm:justify-evenly overflow-x-auto items-center"}>
 
                 <Link href={'/create'}>
-                    Create
+                    Erstellen
                 </Link>
 
                 <Link href={'/manage'}>
-                    Manage
+                    Verwalten
                 </Link>
 
                 <ThemeButton suspressHydrationWarning/>

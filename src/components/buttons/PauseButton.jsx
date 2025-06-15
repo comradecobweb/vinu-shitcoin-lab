@@ -23,9 +23,9 @@ export default function PauseButton({className}) {
 
         async function onSuccess() {
             toast(paused ? {
-                title: "Unpaused!", description: "You can make transactions again!",
+                title: "Fortgesetzt!", description: "Sie können wieder Transaktionen durchführen!",
             } : {
-                title: "Paused!", description: "You can't make transactions now!",
+                title: "Pausiert!", description: "Sie können jetzt keine Transaktionen durchführen!",
             })
             setPaused(!paused);
         }
@@ -37,9 +37,9 @@ export default function PauseButton({className}) {
 
     return paused ?
         <LoadingButton loading={disabled} onClick={onClick} className={className}>
-            Unpause
+            Fortsetzen
         </LoadingButton> :
         <LoadingButton loading={disabled} onClick={onClick} className={className}>
-            Pause
+            Pausieren
         </LoadingButton>
 }

@@ -6,7 +6,7 @@ export default function ConnectButton() {
     const {open} = useAppKit();
     return (
         <Button onClick={open}>
-            Connect
+            Verbinden
         </Button>
     );
 }

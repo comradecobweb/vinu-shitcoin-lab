@@ -29,39 +29,39 @@ export default function Renounce() {
 
             <Label
                 className={"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"}>
-                Renounce Ownership
+                Eigentümerschaft aufgeben
             </Label>
 
             <p className={"text-sm text-muted-foreground"}>
-                Prevents token management
+                Verhindert die Token-Verwaltung
             </p>
 
             <PausableButton loading={buttonDisabled} className={"w-min"} onClick={async () => {
                 if (paused) {
                     toast({
-                        title: "Error!",
-                        description: "You can't renounce ownership of paused token!",
+                        title: "Fehler!",
+                        description: "Sie können die Eigentümerschaft eines pausierten Tokens nicht aufgeben!",
                     });
                     return;
                 }
                 setDialogVisible(true);
 
             }}>
-                Renounce ownership
+                Eigentümerschaft aufgeben
             </PausableButton>
 
             <AlertDialog open={dialogVisible} onOpenChange={setDialogVisible}>
                 <AlertDialogContent className={""}>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Renounce ownership</AlertDialogTitle>
+                        <AlertDialogTitle>Eigentümerschaft aufgeben</AlertDialogTitle>
                         <AlertDialogDescription>
-                            Due to the properties of the blockchain network,
-                            you will not be able to undo this action.
-                            This means you (and no one other) will no longer be able to manage your token.
+                            Aufgrund der Eigenschaften des Blockchain-Netzwerks
+                            können Sie diese Aktion nicht rückgängig machen.
+                            Das bedeutet, dass Sie (und niemand sonst) den Token nicht mehr verwalten können.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>Abbrechen</AlertDialogCancel>
                         <AlertDialogAction onClick={async () => {
 
                             setButtonDisabled(true);
@@ -69,15 +69,15 @@ export default function Renounce() {
                                 await updateOwner('0x0000000000000000000000000000000000000000', token);
 
                                 toast({
-                                    title: "Token ownership transferred renounced!",
-                                    description: "Now no one can manage the token.",
+                                    title: "Token-Eigentümerschaft aufgegeben!",
+                                    description: "Jetzt kann niemand mehr den Token verwalten.",
                                 });
 
                                 router.push('/manage');
                             })
                             setButtonDisabled(false);
 
-                        }}>Renounce</AlertDialogAction>
+                        }}>Aufgeben</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

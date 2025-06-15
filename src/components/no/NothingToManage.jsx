@@ -4,10 +4,10 @@ export default function NothingToManage() {
     return (
         <Center>
             <p>
-                Nothing to do!!!
+                Nichts zu tun!!!
             </p>
             <p>
-                Your token does not support any management features!
+                Ihr Token unterstützt keine Verwaltungsfunktionen!
             </p>
         </Center>
     )

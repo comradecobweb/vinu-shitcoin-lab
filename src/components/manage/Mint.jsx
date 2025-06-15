@@ -25,9 +25,9 @@ export default function Mint() {
     const {mint} = useTokenInteractions(token);
 
     const formSchema = z.object({
-        amount: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
+        amount: z.number().int().min(1, {message: "Wert muss mindestens 1 sein!"}).refine(() => {
             return check(amount, decimals);
-        }, {message: "Wrong value!"}),
+        }, {message: "Falscher Wert!"}),
     });
 
     const form = useForm(
@@ -43,8 +43,8 @@ export default function Mint() {
     async function onSubmit(values) {
         if (paused) {
             toast({
-                title: "Error!",
-                description: "You can't mint paused token!",
+                title: "Fehler!",
+                description: "Sie können einen pausierten Token nicht prägen!",
             });
             return;
         }
@@ -55,8 +55,8 @@ export default function Mint() {
 
         await mint(address, value.toString(), async () => {
             toast({
-                title: "Minted!",
-                description: "Check your wallet!",
+                title: "Geprägt!",
+                description: "Überprüfen Sie Ihre Wallet!",
             });
         })
 
@@ -73,20 +73,20 @@ export default function Mint() {
                         render={({field}) => (
                             <FormItem className={"size-full flex flex-col justify-around items-center"}>
 
-                                <FormLabel>Mint</FormLabel>
+                                <FormLabel>Prägen</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="mint" type={"number"} {...field}
+                                    <Input placeholder="Prägen" type={"number"} {...field}
                                            onChange={event => {
                                                field.onChange(+event.target.value);
                                                setAmount(+event.target.value);
                                            }}/>
                                 </FormControl>
                                 <FormDescription>
-                                    Increases your token amount.
+                                    Erhöht Ihre Token-Menge.
                                 </FormDescription>
                                 <FormMessage/>
                                 <PausableButton loading={buttonDisabled}>
-                                    Mint
+                                    Prägen
                                 </PausableButton>
                             </FormItem>
                         )}

@@ -34,15 +34,15 @@ export default function CreationForm() {
 
     const formSchema = z.object({
         name: z.string().min(1, {
-            message: "Name must be at least 1 characters!",
+            message: "Name muss mindestens 1 Zeichen lang sein!",
         }),
         symbol: z.string().min(1, {
-            message: "Symbol must be at least 1 characters!",
+            message: "Symbol muss mindestens 1 Zeichen lang sein!",
         }),
-        decimals: z.number().int().nonnegative().max(255, {message: "Decimal cannot be greater than 255!"}),
-        initial_supply: z.number().int().min(1, {message: "Value must be at least 1 characters!"}).refine(() => {
+        decimals: z.number().int().nonnegative().max(255, {message: "Dezimalstellen dürfen nicht größer als 255 sein!"}),
+        initial_supply: z.number().int().min(1, {message: "Wert muss mindestens 1 sein!"}).refine(() => {
             return check(initialSupply, decimal);
-        }, {message: "Wrong value!"}),
+        }, {message: "Falscher Wert!"}),
         pausable: z.boolean(),
         burnable: z.boolean(),
         mintable: z.boolean(),
@@ -52,8 +52,8 @@ export default function CreationForm() {
     async function onSubmit(values) {
         if (!isConnected) {
             toast({
-                title: "No wallet detected!",
-                description: "You must first connect your wallet!",
+                title: "Keine Wallet erkannt!",
+                description: "Sie müssen zuerst Ihre Wallet verbinden!",
                 duration: 2000,
             })
         } else {
@@ -96,7 +96,7 @@ export default function CreationForm() {
                                     <Input placeholder="Name" {...field} disabled={disabled}/>
                                 </FormControl>
                                 <FormDescription>
-                                    This is your token name.
+                                    Dies ist der Name Ihres Tokens.
                                 </FormDescription>
                                 <FormMessage/>
                             </FormItem>
@@ -112,7 +112,7 @@ export default function CreationForm() {
                                     <Input placeholder="Symbol" {...field} disabled={disabled}/>
                                 </FormControl>
                                 <FormDescription>
-                                    This is your token symbol.
+                                    Dies ist das Symbol Ihres Tokens.
                                 </FormDescription>
                                 <FormMessage/>
                             </FormItem>
@@ -123,17 +123,17 @@ export default function CreationForm() {
                         name="decimals"
                         render={({field}) => (
                             <FormItem className={"border-2 p-3 rounded-2xl size-full"}>
-                                <FormLabel>Decimals</FormLabel>
+                                <FormLabel>Dezimalstellen</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Decimals" type={"number"} {...field} disabled={disabled}
+                                    <Input placeholder="Dezimalstellen" type={"number"} {...field} disabled={disabled}
                                            onChange={event => {
                                                field.onChange(+event.target.value);
                                                setDecimal(+event.target.value);
                                            }}/>
                                 </FormControl>
                                 <FormDescription>
-                                    Specifies the number of decimal places in the token.
-                                    A value of 18 should be good in most cases.
+                                    Gibt die Anzahl der Dezimalstellen des Tokens an.
+                                    Ein Wert von 18 ist in den meisten Fällen geeignet.
                                 </FormDescription>
                                 <FormMessage/>
                             </FormItem>
@@ -145,9 +145,9 @@ export default function CreationForm() {
                         render={({field}) => (
                             <FormItem className={"border-2 p-3 rounded-2xl size-full"}>
 
-                                <FormLabel>Initial supply</FormLabel>
+                                <FormLabel>Anfangsbestand</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Initial supply" type={"number"} {...field}
+                                    <Input placeholder="Anfangsbestand" type={"number"} {...field}
                                            disabled={disabled}
                                            onChange={event => {
                                                field.onChange(+event.target.value);
@@ -155,7 +155,7 @@ export default function CreationForm() {
                                            }}/>
                                 </FormControl>
                                 <FormDescription>
-                                    The initial amount of your token.
+                                    Die anfängliche Menge Ihres Tokens.
                                 </FormDescription>
                                 <FormMessage/>
                             </FormItem>
@@ -167,9 +167,9 @@ export default function CreationForm() {
                         render={({field}) => (
                             <FormItem className={"border-2 p-3 rounded-2xl size-full"}>
 
-                                <FormLabel>Pausable?</FormLabel>
+                                <FormLabel>Pausierbar?</FormLabel>
                                 <FormDescription>
-                                    Allows you to stop token transactions (for all users).
+                                    Ermöglicht das Anhalten von Token-Transaktionen (für alle Nutzer).
                                 </FormDescription>
                                 <FormControl>
                                     <Switch disabled={disabled}
@@ -186,9 +186,9 @@ export default function CreationForm() {
                         render={({field}) => (
                             <FormItem className={"border-2 p-3 rounded-2xl size-full"}>
 
-                                <FormLabel>Burnable?</FormLabel>
+                                <FormLabel>Brennbar?</FormLabel>
                                 <FormDescription>
-                                    It allows you to reduce the number of tokens in the future.
+                                    Ermöglicht es Ihnen, die Anzahl der Tokens in der Zukunft zu verringern.
                                 </FormDescription>
                                 <FormControl>
                                     <Switch disabled={disabled}
@@ -205,9 +205,9 @@ export default function CreationForm() {
                         render={({field}) => (
                             <FormItem className={"border-2 p-3 rounded-2xl md:order-last size-full"}>
 
-                                <FormLabel>Mintable?</FormLabel>
+                                <FormLabel>Prägbar?</FormLabel>
                                 <FormDescription>
-                                    It allows you to increase the number of tokens in the future.
+                                    Ermöglicht es Ihnen, die Anzahl der Tokens in der Zukunft zu erhöhen.
                                 </FormDescription>
                                 <FormControl>
                                     <Switch disabled={disabled}
@@ -224,9 +224,9 @@ export default function CreationForm() {
                         render={({field}) => (
                             <FormItem className={"border-2 p-3 rounded-2xl size-full"}>
 
-                                <FormLabel>Ownable?</FormLabel>
+                                <FormLabel>Besitzbar?</FormLabel>
                                 <FormDescription>
-                                    Specifies whether the token can change owner.
+                                    Gibt an, ob der Token den Besitzer wechseln kann.
                                 </FormDescription>
                                 <FormControl>
                                     <Switch disabled={disabled}
@@ -240,7 +240,7 @@ export default function CreationForm() {
 
                     <div className={"size-full sm:col-span-2 md:col-span-1 flex flex-row justify-center"}>
                         <SubmitButton className={"self-center w-1/2 md:w-full"} loading={disabled}>
-                            Generate & Deploy
+                            Generieren & Bereitstellen
                         </SubmitButton>
                     </div>
 
@@ -250,15 +250,15 @@ export default function CreationForm() {
             <AlertDialog open={dialogVisible} onOpenChange={setDialogVisible}>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Deploy</AlertDialogTitle>
+                        <AlertDialogTitle>Bereitstellen</AlertDialogTitle>
                         <AlertDialogDescription>
-                            Due to the properties of the blockchain network,
-                            you will not be able to undo this action.
-                            This means that your token cannot be deleted.
+                            Aufgrund der Eigenschaften des Blockchain-Netzwerks
+                            können Sie diese Aktion nicht rückgängig machen.
+                            Das bedeutet, dass Ihr Token nicht gelöscht werden kann.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogCancel>Abbrechen</AlertDialogCancel>
                         <AlertDialogAction onClick={async () => {
                             try {
                                 setDisabled(true);
@@ -272,16 +272,16 @@ export default function CreationForm() {
                                 let token_address = await contractERC20.getAddress();
 
                                 toast({
-                                    title: "Wait for contract deployment on the blockchain...",
-                                    description: "This shouldn't take long.",
+                                    title: "Warten Sie auf die Bereitstellung des Vertrags auf der Blockchain...",
+                                    description: "Das sollte nicht lange dauern.",
                                 });
 
                                 await contractERC20.waitForDeployment();
                                 await addToken(address, token_address, tokenProperties);
 
                                 toast({
-                                    title: "Contract deployed on the blockchain",
-                                    description: "Now Now you can use and manage your token!",
+                                    title: "Vertrag auf der Blockchain bereitgestellt",
+                                    description: "Jetzt können Sie Ihren Token verwenden und verwalten!",
                                 });
                                 setDisabled(false);
 
@@ -289,18 +289,18 @@ export default function CreationForm() {
                                 try {
                                     console.log(e);
                                     toast(e.info.error.code === 4001 ? {
-                                        title: "Oh no!",
-                                        description: "You just rejected a transaction!",
+                                        title: "Oh nein!",
+                                        description: "Sie haben die Transaktion abgelehnt!",
                                     } : {
-                                        title: "Unexpected error!",
-                                        description: "Something went wrong, but we don't know what.",
+                                        title: "Unerwarteter Fehler!",
+                                        description: "Etwas ist schiefgelaufen, aber wir wissen nicht was.",
                                     });
                                     setDisabled(false);
                                 } catch (ee) {
                                     setDisabled(false);
                                 }
                             }
-                        }}>Deploy</AlertDialogAction>
+                        }}>Bereitstellen</AlertDialogAction>
                     </AlertDialogFooter>
                 </AlertDialogContent>
             </AlertDialog>

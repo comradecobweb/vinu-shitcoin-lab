@@ -11,10 +11,10 @@ export default function Description() {
 
     return (
         <p>
-            <b>Vinu Shitcoin Lab</b> is a service for creating and managing tokens on the Vinu network.
-            It provides great flexibility, and ease, because you don`t need to know how to code to make your
-            token. Simply fill out the form and then connect your wallet to deploy your coin. Currently
-            <b> {count} </b> tokens have been designed and implemented using this site.
+            <b>Vinu Shitcoin Lab</b> ist ein Service zur Erstellung und Verwaltung von Tokens im Vinu-Netzwerk.
+            Es bietet große Flexibilität und Einfachheit, da Sie keine Programmierkenntnisse benötigen, um Ihren
+            Token zu erstellen. Füllen Sie einfach das Formular aus und verbinden Sie dann Ihre Wallet, um Ihre Münze bereitzustellen. Aktuell
+            wurden <b> {count} </b> Token mit dieser Seite entworfen und implementiert.
         </p>
     );
 }

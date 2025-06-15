@@ -6,7 +6,7 @@ export default function LoadingButton({className, type, loading, children, onCli
     return loading ?
         <Button type={type} className={className} disabled>
             <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
-            Please wait
+            Bitte warten
         </Button> :
         <Button type={type} className={className} onClick={onClick}>
             {children}

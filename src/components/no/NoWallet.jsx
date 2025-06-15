@@ -6,7 +6,7 @@ export default function NoWallet() {
     return (
         <Center>
             <p>
-                Please connect your wallet
+                Bitte verbinden Sie Ihre Wallet
             </p>
             <ConnectButton/>
         </Center>

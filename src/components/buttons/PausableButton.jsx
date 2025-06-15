@@ -12,7 +12,7 @@ export default function PausableButton({children, loading, className, onClick, t
         return loading ?
             <Button type={type} className={className} disabled>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin"/>
-                Please wait
+                Bitte warten
             </Button>
             :
             <Button type={type} className={className} onClick={onClick}>
@@ -28,7 +28,7 @@ export default function PausableButton({children, loading, className, onClick, t
                     </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>Unpause token first!</p>
+                    <p>Token zuerst entsperren!</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>

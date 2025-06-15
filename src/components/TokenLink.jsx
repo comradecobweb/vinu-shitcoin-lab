@@ -9,15 +9,15 @@ export default function TokenLink({address}) {
     return (
         <Link href={`/manage/${address}`} className={"h-min w-full min-w-full hover:overflow-auto shrink-0 " +
             "flex flex-row rounded-2xl border-4 p-2 justify-around overflow-hidden"}>
-            <DescribedField description={"symbol"}>
+            <DescribedField description={"Symbol"}>
                 {symbol}
             </DescribedField>
 
-            <DescribedField description={"name"}>
+            <DescribedField description={"Name"}>
                 {name}
             </DescribedField>
 
-            <DescribedField description={"decimals"}>
+            <DescribedField description={"Decimal"}>
                 {decimals}
             </DescribedField>
         </Link>

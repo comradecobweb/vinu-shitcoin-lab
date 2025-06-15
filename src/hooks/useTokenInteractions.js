@@ -22,8 +22,8 @@ export default function useTokenInteractions(token_address) {
             const tx = await operation()
 
             toast({
-                title: "Working...",
-                description: "Wait for the transaction to be confirmed on the blockchain!",
+                title: "Arbeiten...",
+                description: "Bitte warten Sie, bis die Transaktion auf der Blockchain bestätigt wurde!",
             });
 
             await tx.wait();
@@ -34,11 +34,11 @@ export default function useTokenInteractions(token_address) {
 
             try {
                 toast(e.info.error.code === 4001 ? {
-                    title: "Oh no!",
-                    description: "You just rejected a transaction!",
+                    title: "Oh nein!",
+                    description: "Sie haben die Transaktion abgelehnt!",
                 } : {
-                    title: "Unexpected error!",
-                    description: "Something went wrong, but we don't know what.",
+                    title: "Unerwarteter Fehler!",
+                    description: "Etwas ist schiefgelaufen, aber wir wissen nicht was.",
                 });
             } catch (ee) {
                 console.error(ee);

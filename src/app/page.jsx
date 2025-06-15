@@ -15,7 +15,7 @@ export default async function Home() {
                 <section className={"lg:w-1/2 lg:pr-2 md:flex lg:align-middle"}>
                     <div>
                         <h1 className={"text-2xl mb-3"}>
-                            What is this?
+                            Was ist das?
                         </h1>
 
                         <Description/>
@@ -24,56 +24,55 @@ export default async function Home() {
 
                 <section className={"lg:w-1/2 lg:pl-2"}>
                     <h1 className={"text-2xl mt-3 mb-3"}>
-                        FAQ
+                        Häufig gestellte Fragen
                     </h1>
                     <Accordion type="single" collapsible>
                         <AccordionItem value="item-1">
-                            <AccordionTrigger>Is it free?</AccordionTrigger>
+                            <AccordionTrigger>Ist es kostenlos?</AccordionTrigger>
                             <AccordionContent>
-                                Not exactly. Creation of your coin is free, but you must pay for deploy them.
+                                Nicht ganz. Die Erstellung Ihrer Münze ist kostenlos, aber Sie müssen für die Bereitstellung bezahlen.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
 
                     <Accordion type="single" collapsible>
                         <AccordionItem value="item-4">
-                            <AccordionTrigger>Why Vinu?</AccordionTrigger>
+                            <AccordionTrigger>Warum Vinu?</AccordionTrigger>
                             <AccordionContent>
-                                Vinu Chain is a friendly EVM network that provides free transactions.
-                                This is what makes it great for this type of project.
+                                Vinu Chain ist ein benutzerfreundliches EVM-Netzwerk, das kostenlose Transaktionen ermöglicht.
+                                Das macht es ideal für diese Art von Projekt.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
 
                     <Accordion type="single" collapsible>
                         <AccordionItem value="item-2">
-                            <AccordionTrigger>Is there any limit on token creation?</AccordionTrigger>
+                            <AccordionTrigger>Gibt es ein Limit für die Token-Erstellung?</AccordionTrigger>
                             <AccordionContent>
-                                No! You can create how many you want!
+                                Nein! Sie können so viele erstellen, wie Sie möchten!
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
 
                     <Accordion type="single" collapsible>
                         <AccordionItem value="item-3">
-                            <AccordionTrigger>What can I do with the token I created?</AccordionTrigger>
+                            <AccordionTrigger>Was kann ich mit dem erstellten Token machen?</AccordionTrigger>
                             <AccordionContent>
-                                Everything! Your token can be used as digital currency in games, as a means of payment
-                                in
-                                your
-                                online store, or for any other payments. You are only limited by your imagination!
+                                Alles! Ihr Token kann als digitale Währung in Spielen, als Zahlungsmittel in
+                                Ihrem Online-Shop oder für andere Zahlungen verwendet werden. Sie sind nur durch Ihre
+                                Fantasie begrenzt!
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
 
                     <Accordion type="single" collapsible>
                         <AccordionItem value="item-4">
-                            <AccordionTrigger>Who created it?</AccordionTrigger>
+                            <AccordionTrigger>Wer hat es erstellt?</AccordionTrigger>
                             <AccordionContent>
-                                This page was created by
+                                Diese Seite wurde von
                                 <Link href={"https://github.com/comradecobweb"}> Comrade Cobweb </Link>
-                                with financial support from
-                                <Link href={"https://www.vinuchain.org/"}> Vinu Chain</Link>.
+                                mit finanzieller Unterstützung von
+                                <Link href={"https://www.vinuchain.org/"}> Vinu Chain</Link> erstellt.
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>

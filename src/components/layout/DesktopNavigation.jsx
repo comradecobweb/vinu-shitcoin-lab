@@ -17,13 +17,13 @@ export default async function DesktopNavigation({className}) {
 
                     <NavigationMenuItem>
                         <NavigationMenuLink href="/create">
-                            Create
+                            Erstellen
                         </NavigationMenuLink>
                     </NavigationMenuItem>
 
                     <NavigationMenuItem>
                         <NavigationMenuLink href="/manage">
-                            Manage
+                            Verwalten
                         </NavigationMenuLink>
                     </NavigationMenuItem>
 
